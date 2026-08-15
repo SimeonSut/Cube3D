@@ -1,5 +1,17 @@
 #include "parser.h"
 
+/**
+NECESSARY ADDITION 
+
+Add function to filter inputs of the map
+
+Conditions :
+
+Only 0 and 1 except for one char letter.
+The ONLY char letter is either N, S, E, or W
+
+*/
+
 int    map_data_init(t_data *data, char **map_info)
 {
 	int     i;

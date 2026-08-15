@@ -30,8 +30,10 @@ char    **map_info_parser(char *map_path)
 	int     fd;
 	char    **map;
 
-	path_len = ft_strlen(map_path);
-	if (ft_strncmp(map_path + path_len - 4, ".cub", 5) != 0)
+	path_len = 0;
+	while (map_path[path_len] && map_path[path_len] != '.')// TEST NEEDED : test if needs to stop at path_len or path_len + 1
+		path_len++;
+	if (ft_strncmp(map_path + path_len, ".cub", 5) != 0)
 	{
 		ft_putstr_fd("Path invalid\n", 2);
 		return (NULL);
