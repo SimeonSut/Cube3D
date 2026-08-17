@@ -54,6 +54,8 @@ typedef struct s_data
     t_map       map;
     t_img       img;
     t_img       img_p;
+    t_img       v_dir;
+    t_img       v_plane;
     t_img       screen;
 }               t_data;
 

@@ -50,6 +50,25 @@ void    map_render(t_data *data)
     }
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p.img,
         data->player.pos_x * 64, data->player.pos_y * 64);
+    int len = 0;
+    int tile_size = 64;
+
+    while (len < tile_size)
+    {
+        mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir.img,
+            (data->player.pos_x * tile_size + 16) + data->player.dir_x * len,
+            (data->player.pos_y * tile_size + 16) + data->player.dir_y * len);
+        len++;
+    }
+    len = tile_size * -0.66;
+    while (len < (tile_size * 0.66))
+    {
+        mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_plane.img,
+            (data->player.pos_x * tile_size + 16) + (data->player.dir_x * tile_size) + data->player.plane_x * len,
+            (data->player.pos_y * tile_size + 16) + (data->player.dir_y * tile_size) + data->player.plane_y * len);
+        len++;
+    }
+    
 }
 
 //fait tout le travail du raycasting pour une frame complète : 

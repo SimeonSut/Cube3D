@@ -45,8 +45,8 @@ int key_config(int keycode, void *param)
         data->player.plane_x = data->player.plane_x * cos(0.03) - data->player.plane_y * sin(0.03);
         data->player.plane_y = old_plane_x * sin(0.03) + data->player.plane_y * cos(0.03);
     }
-    //map_render(data);
-    map_d_render(data);
+    map_render(data);
+    //map_d_render(data);
     return (0);
 }
 
@@ -113,15 +113,24 @@ int main(int ac, char **av)
     data.img_p.addr = mlx_get_data_addr(data.img_p.img, &data.img_p.bits_per_pixel,
         &data.img_p.line_length, &data.img_p.endian);
     draw_squar(&data.img_p, 32, 0x00FF0000);
+    // vecteur direction
+    data.v_dir.img = mlx_new_image(data.mlx, 1, 1);
+    data.v_dir.addr = mlx_get_data_addr(data.v_dir.img, &data.v_dir.bits_per_pixel,
+        &data.v_dir.line_length, &data.v_dir.endian);
+    my_mlx_pixel_put(&data.v_dir, 0, 0, 0xEEF527);
+    // vecteur plane
+    data.v_plane.img = mlx_new_image(data.mlx, 1, 1);
+    data.v_plane.addr = mlx_get_data_addr(data.v_plane.img, &data.v_plane.bits_per_pixel,
+        &data.v_plane.line_length, &data.v_plane.endian);
+    my_mlx_pixel_put(&data.v_plane, 0, 0, 0x00A1FF);
     // map render 2D
-    //map_render(&data);
+    map_render(&data);
 
     // map render 3D
     data.screen.img = mlx_new_image(data.mlx, 1920, 1080);
     data.screen.addr = mlx_get_data_addr(data.screen.img, &data.screen.bits_per_pixel,
         &data.screen.line_length, &data.screen.endian);
-    map_d_render(&data);
-    //map_render(&data); 
+    //map_d_render(&data);
     // key hook
     mlx_hook(data.mlx_win, 2, 1L<<0, (int (*)())(void *)key_config, &data);
     mlx_loop(data.mlx);

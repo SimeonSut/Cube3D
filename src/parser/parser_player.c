@@ -8,7 +8,7 @@ void	t_player_init(t_player *player, int x, int y, char *dir)
 		//Le +0.5 évite que le joueur démarre collé à un 
 		//mur ou pile sur une frontière de case (ce qui peut 
 		//casser tes calculs de collision dès le premier frame).
-
+		#define FOV 0.66
 		//D'où vient la valeur 0.66
 		//La longueur (norme) du vecteur plane détermine l'ouverture du FOV, 
 		//pas juste sa direction. Plus plane est long par rapport à dir
@@ -20,7 +20,7 @@ void	t_player_init(t_player *player, int x, int y, char *dir)
 		{
 			player->dir_x = 0;
 			player->dir_y = -1;
-			player->plane_x = 0.66;
+			player->plane_x = FOV;
 			player->plane_y = 0;
 		}
 		else if (*dir == 'S')
