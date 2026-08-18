@@ -68,7 +68,13 @@ void    map_render(t_data *data)
             (data->player.pos_y * tile_size + 16) + (data->player.dir_y * tile_size) + data->player.plane_y * len);
         len++;
     }
-    
+    double camera_x;
+    double ray_dir_x;
+    double ray_dir_y;
+    int map_x;
+    int map_y;
+    double delta_dist_x;
+    double delta_dist_y;
 }
 
 //fait tout le travail du raycasting pour une frame complète : 
