@@ -1,4 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
+/*   Updated: 2026/08/18 20:56:42 by ssutarmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
+
+static char	**map_info_parser(char *map_path);
+static int	map_data_init(t_data *data, char **map_info);
 
 /**
 NECESSARY ADDITION 
@@ -12,10 +27,51 @@ The ONLY char letter is either N, S, E, or W
 
 */
 
-int    map_data_init(t_data *data, char **map_info)
+int			map_parser(t_data *data, char **av)
 {
-	int     i;
-	int     map_counter;
+	char	**map_info;
+
+	map_info = map_info_parser(av[1]);
+	if (!map_info)
+		return (1);
+	if (map_data_init(data, map_info) != 0)
+	{
+		ft_putstr_fd("Map parsing failed !\n", 2);
+		free_all(map_info);
+		free_t_map(data->map);
+		return (1);
+	}
+	free_all(map_info);
+	return (0);
+}
+
+static char	**map_info_parser(char *map_path)
+{
+	int		path_len;
+	int		fd;
+	char	**map;
+
+	path_len = 0;
+	while (map_path[path_len] && map_path[path_len] != '.')// TEST NEEDED : test if needs to stop at path_len or path_len + 1
+		path_len++;
+	if (ft_strncmp(map_path + path_len, ".cub", 5) != 0)
+	{
+		ft_putstr_fd("Path invalid\n", 2);
+		return (NULL);
+	}
+	fd = open(map_path, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	map = parser_construct(fd);
+	if (!map)
+		return (NULL);
+	return (map);
+}
+
+static int	map_data_init(t_data *data, char **map_info)
+{
+	int	i;
+	int	map_counter;
 
 	data->map.map = NULL;
 	map_counter = 0;
@@ -38,15 +94,5 @@ int    map_data_init(t_data *data, char **map_info)
 			data->map.map[map_counter++ + 1] = NULL;
 		}
 	}
-	return (0);
-}
-
-int	player_data_init(t_data *data)
-{
-	data->player.player_nb = 0;
-	if (player_position(data) == 1)
-		return (1);
-	if (data->player.player_nb < 1 || data->player.player_nb > 1)
-		return (1);
 	return (0);
 }
