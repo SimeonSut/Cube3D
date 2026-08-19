@@ -8,24 +8,41 @@ void    my_mlx_pixel_put(t_img *img, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void    draw_squar(void *img, int size, int color)
+void    draw_squar(void *img, int size, int color, int mode)
 {
     int y;
     int x;
 
-    y = 0;
-    while (y < size)
+    if (mode == 0)
     {
-        x = 0;
-        while (x < size)
+        y = 0;
+        while (y < size)
         {
-            if (y == 0 || y == size - 1)
-                my_mlx_pixel_put(img, x, y, color);
-            else if (x == 0 || x == size - 1)
-                my_mlx_pixel_put(img, x, y, color);
-            x++;
+            x = 0;
+            while (x < size)
+            {
+                if (y == 0 || y == size - 1)
+                    my_mlx_pixel_put(img, x, y, color);
+                else if (x == 0 || x == size - 1)
+                    my_mlx_pixel_put(img, x, y, color);
+                x++;
+            }
+            y++;
         }
-        y++;
+    }
+    else
+    {
+        y = 0;
+        while (y < size)
+        {
+            x = 0;
+            while (x < size)
+            {
+                my_mlx_pixel_put(img, x, y, color);
+                x++;
+            }
+            y++;
+        }
     }
 }
 
@@ -44,6 +61,9 @@ void    map_render(t_data *data)
             if (data->map.map[y][x] == '1')
                 mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.img,
                     x * 64, y * 64);
+            else
+                mlx_put_image_to_window(data->mlx, data->mlx_win, data->grill.img,
+                    x * 64, y * 64);
             x++;
         }
         y++;
@@ -56,25 +76,87 @@ void    map_render(t_data *data)
     while (len < tile_size)
     {
         mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir.img,
-            (data->player.pos_x * tile_size + 16) + data->player.dir_x * len,
-            (data->player.pos_y * tile_size + 16) + data->player.dir_y * len);
+            (data->player.pos_x * tile_size) + data->player.dir_x * len,
+            (data->player.pos_y * tile_size) + data->player.dir_y * len);
         len++;
     }
-    len = tile_size * -0.66;
-    while (len < (tile_size * 0.66))
+    x = 0;
+    double nb_rays = tan(FOV / 2) * tile_size;
+    while (x < nb_rays)
+    {
+        double camera_x = 2.0 * x / nb_rays - 1;
+        double ray_dir_x = data->player.dir_x + data->player.plane_x * camera_x;
+        double ray_dir_y = data->player.dir_y + data->player.plane_y * camera_x;
+        int map_x = (int)data->player.pos_x;
+        int map_y = (int)data->player.pos_y;
+        double delta_dist_x = fabs(1 / ray_dir_x);
+        double delta_dist_y = fabs(1 / ray_dir_y);
+        double side_dist_x = 0;
+        double side_dist_y = 0;
+        int step_x;
+        int step_y;
+        if (ray_dir_x < 0)
+        {
+            step_x = -1;
+            side_dist_x = (data->player.pos_x - (double)map_x) * delta_dist_x;
+        }
+        else
+        {
+            step_x = 1;
+            side_dist_x = ((double)map_x + 1.0 - data->player.pos_x) * delta_dist_x;
+        }
+        if (ray_dir_y < 0)
+        {
+            step_y = -1;
+            side_dist_y = (data->player.pos_y - (double)map_y) * delta_dist_y;
+        }
+        else
+        {
+            step_y = 1;
+            side_dist_y = ((double)map_y + 1.0 - data->player.pos_y) * delta_dist_y;
+        }
+        int hit = 0;
+        len = 0;
+        while (!hit)
+        {
+            
+            if (side_dist_x < side_dist_y)
+            {
+                while (len < (side_dist_x * tile_size))
+                {
+                    mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir.img,
+                        (data->player.pos_x * tile_size) + ray_dir_x * len,
+                        (data->player.pos_y * tile_size) + ray_dir_y * len);
+                    len++;
+                }
+                side_dist_x += delta_dist_x;
+                map_x += step_x;
+            }
+            else
+            {
+                while (len < (side_dist_y * tile_size))
+                {
+                    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p.img,
+                        (data->player.pos_x * tile_size) + ray_dir_x * len,
+                        (data->player.pos_y * tile_size) + ray_dir_y * len);
+                    len++;
+                }
+                side_dist_y += delta_dist_y;
+                map_y += step_y;
+            }
+            if (data->map.map[map_y][map_x] == '1')
+                hit = 1;
+        }
+        x++;
+    }
+    len = -tile_size;
+    while (len < tile_size)
     {
         mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_plane.img,
-            (data->player.pos_x * tile_size + 16) + (data->player.dir_x * tile_size) + data->player.plane_x * len,
-            (data->player.pos_y * tile_size + 16) + (data->player.dir_y * tile_size) + data->player.plane_y * len);
+            (data->player.pos_x * tile_size) + (data->player.dir_x * tile_size) + data->player.plane_x * len,
+            (data->player.pos_y * tile_size) + (data->player.dir_y * tile_size) + data->player.plane_y * len);
         len++;
     }
-    double camera_x;
-    double ray_dir_x;
-    double ray_dir_y;
-    int map_x;
-    int map_y;
-    double delta_dist_x;
-    double delta_dist_y;
 }
 
 //fait tout le travail du raycasting pour une frame complète : 

@@ -107,12 +107,16 @@ int main(int ac, char **av)
     data.img.img = mlx_new_image(data.mlx, 64, 64);
     data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bits_per_pixel,
         &data.img.line_length, &data.img.endian);
-    draw_squar(&data.img, 64, 0x13031990);
+    draw_squar(&data.img, 64, 0x13031990, 1);
+    data.grill.img = mlx_new_image(data.mlx, 64, 64);
+    data.grill.addr = mlx_get_data_addr(data.grill.img, &data.grill.bits_per_pixel,
+        &data.grill.line_length, &data.grill.endian);
+    draw_squar(&data.grill, 64, 0x808080, 0);
     // create a player 
-    data.img_p.img = mlx_new_image(data.mlx, 32, 32);
+    data.img_p.img = mlx_new_image(data.mlx, 1, 1);
     data.img_p.addr = mlx_get_data_addr(data.img_p.img, &data.img_p.bits_per_pixel,
         &data.img_p.line_length, &data.img_p.endian);
-    draw_squar(&data.img_p, 32, 0x00FF0000);
+    my_mlx_pixel_put(&data.img_p, 0, 0, 0x00FF0000);
     // vecteur direction
     data.v_dir.img = mlx_new_image(data.mlx, 1, 1);
     data.v_dir.addr = mlx_get_data_addr(data.v_dir.img, &data.v_dir.bits_per_pixel,

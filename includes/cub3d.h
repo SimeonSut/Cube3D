@@ -4,6 +4,8 @@
 # include <stdio.h>
 # include <math.h>
 
+# define FOV 3.1415 / 4
+
 typedef struct s_img
 {
     void    *img;
@@ -54,6 +56,7 @@ typedef struct s_data
     t_map       map;
     t_img       img;
     t_img       img_p;
+    t_img       grill;
     t_img       v_dir;
     t_img       v_plane;
     t_img       screen;
