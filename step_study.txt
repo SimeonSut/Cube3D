@@ -13,7 +13,7 @@ Cub3D study steps:
     - draw a squar for player
     - rend player and wall
     - key hook config for mouvement
-    - rend 3dmap
+    - rend 3dmap (lodev raycasting)
         - init all element for DDA 
             - cameraX, ray directoin, delta distance, side distance
             - steps, side, map position
@@ -26,4 +26,4 @@ Cub3D study steps:
         - donne l'addresse a l'image (mlx_get_data_addr)
 
         - calculate TextureX => quelle colone de la texture affiche pour la colone sur l'ecran
-        - 
+            - 
