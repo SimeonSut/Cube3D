@@ -14,6 +14,16 @@ Cub3D study steps:
     - rend player and wall
     - key hook config for mouvement
     - rend 3dmap
-        - init all element to calculate line height -> calculate drawStart and drawEnd(draw colone)
+        - init all element for DDA 
+            - cameraX, ray directoin, delta distance, side distance
+            - steps, side, map position
+        - perform DDA
+        - une fois le mur hit par le rayon, on a la distance entre le joueur et le mur(side distance)
+        - calculate -> calculatla hauteur du mur et designe aux drawStart et drawEnd(draw colone)
+    - rend wall texture
+        - creer un struct de texture (addr, width, height, bpp, line_length, endian)
+        - charger texture.xpm et transformer en img utilisable (mlx_xpm_file_to_image)
+        - donne l'addresse a l'image (mlx_get_data_addr)
 
-
+        - calculate TextureX => quelle colone de la texture affiche pour la colone sur l'ecran
+        - 
