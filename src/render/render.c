@@ -1,5 +1,8 @@
 #include "render.h"
 
+static  void    texture_set(t_data *data);
+static  void    draw_texture(t_data *data);
+
 void    my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
     char *dst;
@@ -171,177 +174,142 @@ void    map_d_render(t_data *data)
     y = 0;
     x = 0;
     //récupère dans des variables locales (dir_x, dir_y, plane_x, plane_y)
-    double  dir_x = data->player.dir_x;
-    double  dir_y = data->player.dir_y;
-    double  plane_x = data->player.plane_x;
-    double  plane_y = data->player.plane_y;
-    //Pour chaque x : elle calcule camera_x (la position normalisée de cette colonne entre -1 et 1)
-    double  camera_x = 2.0 * x / 1920 - 1;
-    //ray_dir_x/ray_dir_y (la direction du rayon envoyé pour cette colonne précise, 
-    //en combinant dir et plane pondérés par camera_x)
-    double  ray_dir_x = dir_x + plane_x * camera_x;
-    double  ray_dir_y = dir_y + plane_y * camera_x;
-    //map_x/map_y à la position actuelle du joueur
-    int     map_x = (int)data->player.pos_x;
-    int     map_y = (int)data->player.pos_y;
-    //delta_dist_x/delta_dist_y pour ce rayon spécifique.
-    double  delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
-    double  delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
-    //l'initialisation du DDA : selon le signe de ray_dir_x/ray_dir_y, 
-    //elle détermine step_x/step_y (la direction dans laquelle on avance dans la grille) et 
-    //les side_dist_x/side_dist_y de départ (la distance jusqu'à la première ligne de grille rencontrée dans chaque axe)
-    double  side_dist_x;
-    double  side_dist_y;
-    int     step_x;
-    int     step_y;
-    if (ray_dir_x < 0)
-    {
-        step_x = -1;
-        side_dist_x = (data->player.pos_x - (double)map_x) * delta_dist_x;
-    }
-    else
-    {
-        step_x = 1;
-        side_dist_x = ((double)map_x + 1.0 - data->player.pos_x) * delta_dist_x;
-    }
-    if (ray_dir_y < 0)
-    {
-        step_y = -1;
-        side_dist_y = (data->player.pos_y - (double)map_y) * delta_dist_y;
-    }
-    else
-    {
-        step_y = 1;
-        side_dist_y = ((double)map_y + 1.0 - data->player.pos_y) * delta_dist_y;
-    }
-    //la boucle while (!hit) fait avancer le rayon case par case dans la grille : 
-    //à chaque itération, elle compare side_dist_x et side_dist_y, avance sur l'axe le plus proche, 
-    //met à jour map_x ou map_y, note quel côté a été touché (side), 
-    //et vérifie si la nouvelle case est un mur ('1'). Dès qu'un mur est trouvé, la boucle s'arrête.
-    int side;
-    int hit = 0;
-    while (!hit)
-    {
-        if (side_dist_x < side_dist_y)
-        {
-            side_dist_x += delta_dist_x;
-            map_x += step_x;
-            side = 0;
-        }
-        else
-        {
-            side_dist_y += delta_dist_y;
-            map_y += step_y;
-            side = 1;
-        }
-        if (data->map.map[map_y][map_x] == '1')
-            hit = 1;
-    }
-    //Une fois le mur localisé, elle calcule perp_wall_dist — 
-    //la distance perpendiculaire, en fonction de si le mur touché 
-    //est un côté vertical (side == 0, formule avec side_dist_x) ou 
-    //horizontal (side == 1, formule avec side_dist_y). 
-    //Cette distance donne directement line_height, 
-    //la hauteur en pixels du mur à dessiner pour cette colonne — 
-    //plus la distance est grande, plus line_height est petit.
-    double  perp_wall_dist;
-    if (side == 0)
-        perp_wall_dist = side_dist_x - delta_dist_x;
-    else
-        perp_wall_dist = side_dist_y - delta_dist_y;
-    int     line_height = 1080 / perp_wall_dist;
-    printf("dirX = %f\n"
-            "dirY = %f\n"
-            "planeX = %f\n"
-            "planeY = %f\n"
-            "cameraX = %f\n"
-            "rayDirX = %f\n"
-            "rayDirY = %f\n"
-            "mapX = %d\n"
-            "mapY = %d\n"
-            "deltaDistX = %f\n"
-            "deltaDistY = %f\n"
-            "sideDistX = %f\n"
-            "sideDistY = %f\n"
-            "stepX = %d\n"
-            "stepY = %d\n"
-            "perpWallDist = %f\n"
-            "lineHeight = %d\n\r",
-        dir_x, dir_y, plane_x, plane_y, camera_x, ray_dir_x, ray_dir_y,
-        map_x, map_y, delta_dist_x, delta_dist_y, side_dist_x, side_dist_y,
-        step_x, step_y, perp_wall_dist, line_height);
     
-    x = 0;
     while (x < 1920)
     {
-        camera_x = 2.0 * x / 1920 - 1;
-        ray_dir_x = dir_x + plane_x * camera_x;
-        ray_dir_y = dir_y + plane_y * camera_x;
-        map_x = (int)data->player.pos_x;
-        map_y = (int)data->player.pos_y;
-        delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
-        delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
-        if (ray_dir_x < 0)
+        //Pour chaque x : elle calcule camera_x (la position normalisée de cette colonne entre -1 et 1)
+        data->ray.camera_x = 2.0 * x / 1920 - 1;
+        //ray_dir_x/ray_dir_y (la direction du rayon envoyé pour cette colonne précise, 
+        //en combinant dir et plane pondérés par camera_x)
+        data->ray.ray_dir_x = data->player.dir_x + data->player.plane_x * data->ray.camera_x;
+        data->ray.ray_dir_y = data->player.dir_y + data->player.plane_y * data->ray.camera_x;
+        //map_x/map_y à la position actuelle du joueur
+        data->ray.map_x = (int)data->player.pos_x;
+        data->ray.map_y = (int)data->player.pos_y;
+        //delta_dist_x/delta_dist_y la longueur de ce rayon spécifique avancer de 1.
+        data->ray.delta_dist_x = (data->ray.ray_dir_x == 0) ? 1e30 : fabs(1 / data->ray.ray_dir_x);
+        data->ray.delta_dist_y = (data->ray.ray_dir_y == 0) ? 1e30 : fabs(1 / data->ray.ray_dir_y);
+        //l'initialisation du DDA : selon le signe de ray_dir_x/ray_dir_y, 
+        //elle détermine step_x/step_y (la direction dans laquelle on avance dans la grille) et 
+        //les side_dist_x/side_dist_y de départ 
+        //(la distance jusqu'à la première ligne de grille rencontrée dans chaque axe)
+        if (data->ray.ray_dir_x < 0)
         {
-            step_x = -1;
-            side_dist_x = (data->player.pos_x - (double)map_x) * delta_dist_x;
+            data->ray.step_x = -1;
+            data->ray.side_dist_x = (data->player.pos_x - (double)data->ray.map_x) * data->ray.delta_dist_x;
         }
         else
         {
-            step_x = 1;
-            side_dist_x = ((double)map_x + 1.0 - data->player.pos_x) * delta_dist_x;
+            data->ray.step_x = 1;
+            data->ray.side_dist_x = ((double)data->ray.map_x + 1.0 - data->player.pos_x) * data->ray.delta_dist_x;
         }
-        if (ray_dir_y < 0)
+        if (data->ray.ray_dir_y < 0)
         {
-            step_y = -1;
-            side_dist_y = (data->player.pos_y - (double)map_y) * delta_dist_y;
+            data->ray.step_y = -1;
+            data->ray.side_dist_y = (data->player.pos_y - (double)data->ray.map_y) * data->ray.delta_dist_y;
         }
         else
         {
-            step_y = 1;
-            side_dist_y = ((double)map_y + 1.0 - data->player.pos_y) * delta_dist_y;
+            data->ray.step_y = 1;
+            data->ray.side_dist_y = ((double)data->ray.map_y + 1.0 - data->player.pos_y) * data->ray.delta_dist_y;
         }
-        hit = 0;
-        while (!hit)
+        //la boucle while (!hit) fait avancer le rayon case par case dans la grille : 
+        //à chaque itération, elle compare side_dist_x et side_dist_y, avance sur l'axe le plus proche, 
+        //met à jour map_x ou map_y, note quel côté a été touché (side), 
+        //et vérifie si la nouvelle case est un mur ('1'). Dès qu'un mur est trouvé, la boucle s'arrête.
+        data->ray.hit = 0;
+        while (!data->ray.hit)
         {
-            if (side_dist_x < side_dist_y)
+            if (data->ray.side_dist_x < data->ray.side_dist_y)
             {
-                side_dist_x += delta_dist_x;
-                map_x += step_x;
-                side = 0;
+                data->ray.side_dist_x += data->ray.delta_dist_x;
+                data->ray.map_x += data->ray.step_x;
+                data->ray.side = 0;
             }
             else
             {
-                side_dist_y += delta_dist_y;
-                map_y += step_y;
-                side = 1;
+                data->ray.side_dist_y += data->ray.delta_dist_y;
+                data->ray.map_y += data->ray.step_y;
+                data->ray.side = 1;
             }
-            if (data->map.map[map_y][map_x] == '1')
-                hit = 1;
+            if (data->map.map[data->ray.map_y][data->ray.map_x] == '1')
+                data->ray.hit = 1;
         }
-        if (side == 0)
-            perp_wall_dist = side_dist_x - delta_dist_x;
+        //Une fois le mur localisé, elle calcule perp_wall_dist — 
+        //la distance perpendiculaire, en fonction de si le mur touché 
+        //est un côté vertical (side == 0, formule avec side_dist_x) ou 
+        //horizontal (side == 1, formule avec side_dist_y). 
+        //Cette distance donne directement line_height, 
+        //la hauteur en pixels du mur à dessiner pour cette colonne — 
+        //plus la distance est grande, plus line_height est petit.
+        if (data->ray.side == 0)
+            data->ray.perp_wall_dist = data->ray.side_dist_x - data->ray.delta_dist_x;
         else
-            perp_wall_dist = side_dist_y - delta_dist_y;
-        line_height = 1080 / perp_wall_dist;
+            data->ray.perp_wall_dist = data->ray.side_dist_y - data->ray.delta_dist_y;
+        data->ray.line_height = 1080 / data->ray.perp_wall_dist;
         //draw_start/draw_end centrent cette hauteur de mur verticalement sur l'écran (1080/2 étant le milieu), 
         //en la clampant pour ne jamais dessiner en dehors des limites de l'image (0 à 1079). 
         //La dernière petite boucle sur y remplit chaque pixel de cette portion de colonne avec une couleur unie
-        int draw_start = -line_height / 2 + 1080 / 2;
-        int draw_end = line_height / 2 + 1080 / 2;
-        if (draw_start < 0) draw_start = 0;
-        if (draw_end >= 1080) draw_end = 1080 - 1;
+        data->ray.draw_start = -data->ray.line_height / 2 + 1080 / 2;
+        data->ray.draw_end = data->ray.line_height / 2 + 1080 / 2;
+        if (data->ray.draw_start < 0) data->ray.draw_start = 0;
+        if (data->ray.draw_end >= 1080) data->ray.draw_end = 1080 - 1;
         int color = 0x13031990;
-        if (side == 1)
+        if (data->ray.side == 1)
             color = color / 2;
-        y = draw_start;
-        while (y <= draw_end)
+        y = data->ray.draw_start;
+        while (y <= data->ray.draw_end)
         {
-            my_mlx_pixel_put(&data->screen, x, y, color);
+            draw_texture(data);
+            my_mlx_pixel_put(&data->screen, x, y, data->texture.pixel_color);
             y++;
         }
         x++;
     }
     //Une fois les 1920 colonnes traitées, un seul mlx_put_image_to_window affiche le buffer entier d'un coup
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
+}
+
+// set la texture par rapport le cote touche par le rayon et ray direction
+static  void    texture_set(t_data *data)
+{
+    if (data->ray.side == 0)
+    {
+        if (data->ray.ray_dir_x < 0)
+            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_no,
+                &data->texture.width, &data->texture.height);
+        else
+            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_so,
+                &data->texture.width, &data->texture.height);
+    }
+    else
+    {
+        if (data->ray.ray_dir_y < 0)
+            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_we,
+                &data->texture.width, &data->texture.height);
+        else
+            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_ea,
+                &data->texture.width, &data->texture.height);
+    }
+    data->texture.addr = mlx_get_data_addr(data->texture.img, &data->texture.bits_per_pixel,
+        &data->texture.line_length, &data->texture.endian);
+}
+
+static  void    draw_texture(t_data *data)
+{
+    texture_set(data);
+    if (data->ray.side == 0)
+        data->ray.wall_x = data->player.pos_y + data->ray.perp_wall_dist * data->ray.ray_dir_y;
+    else
+        data->ray.wall_x = data->player.pos_x + data->ray.perp_wall_dist * data->ray.ray_dir_x;
+    data->ray.wall_x -= floor(data->ray.wall_x);
+    data->texture.texture_x = (int)(data->ray.wall_x * data->texture.width);
+    data->texture.step = (double)data->texture.height / data->ray.line_height;
+    data->texture.texture_pos = (data->ray.draw_start - 1080 / 2 + data->ray.line_height / 2) * data->texture.step;
+    data->texture.texture_y = (int)data->texture.texture_pos & (data->texture.height - 1);
+    data->texture.texture_pos += data->texture.step;
+    data->texture.pixel_color = *(unsigned int *)(data->texture.addr +
+        (data->texture.texture_y * data->texture.line_length + data->texture.texture_x *
+        (data->texture.bits_per_pixel / 8)));
+    
 }

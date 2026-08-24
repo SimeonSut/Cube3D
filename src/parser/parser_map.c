@@ -59,6 +59,12 @@ int	dir_init(t_data *data, char *map_info)
 	tmps = ft_split(map_info, ' ');
 	if (!tmps)
 		return (1);
+
+	//debug: remove /n
+	int	len = ft_strlen(tmps[1]);
+	tmps[1][len - 1] = 0;
+	printf("%s\n", tmps[1]);
+
 	if (ft_strncmp(tmps[0], "NO", 3) == 0 && tmps[1])
 		data->map.texture_no = ft_strdup(tmps[1]);
 	else if (ft_strncmp(tmps[0], "SO", 3) == 0 && tmps[1])

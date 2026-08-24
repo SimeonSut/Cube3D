@@ -17,7 +17,32 @@ typedef struct s_texture
     int     endian;
     int     texture_x;
     int     texture_y;
+    double  texture_pos;
+    double  step;
+    int     pixel_color;
 }           t_texture;
+
+typedef struct s_ray
+{
+    double  camera_x;
+    double  ray_dir_x;
+    double  ray_dir_y;
+    int     map_x;
+    int     map_y;
+    double  delta_dist_x;
+    double  delta_dist_y;
+    double  side_dist_x;
+    double  side_dist_y;
+    int     step_x;
+    int     step_y;
+    int     side;
+    int     hit;
+    double  perp_wall_dist;
+    int     line_height;
+    int     draw_start;
+    int     draw_end;
+    double  wall_x;
+}           t_ray;
 
 typedef struct s_img
 {
@@ -73,6 +98,8 @@ typedef struct s_data
     t_img       v_dir;
     t_img       v_plane;
     t_img       screen;
+    t_ray       ray;
+    t_texture   texture;
 }               t_data;
 
 #endif
