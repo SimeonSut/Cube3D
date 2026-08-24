@@ -6,76 +6,13 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/18 20:32:28 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/24 21:18:16 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	dir_color_init(t_data *data, char *map_info)
-{
-	if (ft_strnstr(map_info, "NO ", 3) != NULL
-		|| ft_strnstr(map_info, "SO ", 3) != NULL
-		|| ft_strnstr(map_info, "WE ", 3) != NULL
-		|| ft_strnstr(map_info, "EA ", 3) != NULL)
-	{
-		if (dir_init(data, map_info) != 0)
-			return (1);
-	}
-	else if (ft_strnstr(map_info, "F ", 2) != NULL
-		|| ft_strnstr(map_info, "C ", 2) != NULL)
-	{
-		if (floor_ceil_init(data, map_info) != 0)
-			return (1);
-	}
-	return (0);
-}
-
-void	free_t_map(t_map map_data)
-{
-	if (map_data.texture_no)
-		free(map_data.texture_no);
-	if (map_data.texture_so)
-		free(map_data.texture_so);
-	if (map_data.texture_we)
-		free(map_data.texture_we);
-	if (map_data.texture_ea)
-		free(map_data.texture_ea);
-	if (map_data.map)
-		free_all(map_data.map);
-}
-
-int	string_count(char **strs)
-{
-	int	i;
-
-	if (!strs)
-		return (0);
-	i = 0;
-	while (strs[i])
-		i++;
-	return (i);
-}
-
-char	**dup_map(char **map)
-{
-	char	**dup;
-	int		i;
-
-	if (!map)
-		return (NULL);
-	dup = malloc(sizeof(char *) * (string_count(map) + 1));
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (map[i])
-	{
-		dup[i] = ft_strdup(map[i]);
-		i++;
-	}
-	dup[i] = NULL;
-	return (dup);
-}
+static int	string_count(char **strs);
 
 int flood_fill(char **map, int p_x, int p_y)
 {
@@ -104,4 +41,58 @@ int flood_fill(char **map, int p_x, int p_y)
 	if (flood_fill(map, p_x, p_y - 1) == 1)
 		return (1);
 	return (0);
+}
+
+char	**dup_map(char **map)
+{
+	char	**dup;
+	int		i;
+
+	if (!map)
+		return (NULL);
+	dup = malloc(sizeof(char *) * (string_count(map) + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (map[i])
+	{
+		dup[i] = ft_strdup(map[i]);
+		if (!dup[i])
+		{
+			free_all(dup);
+			return (NULL);
+		}
+		i++;
+	}
+	dup[i] = NULL;
+	return (dup);
+}
+
+int	is_valid(char *line, int mode)
+{
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "NO ", 4) == 0)
+		return (0);
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "SO ", 4) == 0)
+		return (0);
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "WE ", 4) == 0)
+		return (0);
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "EA ", 4) == 0)
+		return (0);
+	if ((mode == 0 || mode == 2) && ft_strncmp(line, "F ", 3) == 0)
+		return (0);
+	if ((mode == 0 || mode == 2) && ft_strncmp(line, "C ", 3) == 0)
+		return (0);
+	return (1);
+}
+
+static int	string_count(char **strs)
+{
+	int	i;
+
+	if (!strs)
+		return (0);
+	i = 0;
+	while (strs[i])
+		i++;
+	return (i);
 }

@@ -6,55 +6,97 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/18 20:35:44 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/24 20:58:25 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	create_rgb(int r, int g, int b)
-{
-	return (r << 16 | g << 8 | b);
-}
+static int	directions_texture_init(t_data *data, char **tmps);
+static int	floor_ceil_init(t_data *data, char **tmps);
+static int	create_rgb(char *red, char *green, char *blue);
 
-int	dir_init(t_data *data, char *map_info)
+int	direction_and_color_init(t_data *data, char *map_info)
 {
-	char **tmps;
+	char	**tmps;
 
-	tmps = ft_split(map_info, ' ');
+	if (is_valid(map_info, 0) != 0)
+		return (0);
+	tmps == ft_split(map_info, ' ');
 	if (!tmps)
 		return (1);
-	if (ft_strncmp(tmps[0], "NO", 3) == 0 && tmps[1])
-		data->map.texture_no = ft_strdup(tmps[1]);
-	else if (ft_strncmp(tmps[0], "SO", 3) == 0 && tmps[1])
-		data->map.texture_so = ft_strdup(tmps[1]);
-	else if (ft_strncmp(tmps[0], "WE", 3) == 0 && tmps[1])
-		data->map.texture_we = ft_strdup(tmps[1]);
-	else if (ft_strncmp(tmps[0], "EA", 3) == 0 && tmps[1])
-		data->map.texture_ea = ft_strdup(tmps[1]);
+	if (is_valid(map_info, 1) == 0)
+	{
+		if (directions_texture_init(data, tmps) == 1)
+		{
+			free_all(tmps);
+			return (1);
+		}
+	}
+	else if (is_valid(map_info, 2) == 0)
+	{
+		if (floor_ceil_init(data, map_info) != 0)
+		{
+			free_all(tmps);
+			return (1);
+		}
+	}
 	free_all(tmps);
 	return (0);
 }
 
-int	floor_ceil_init(t_data *data, char *map_info)
+static int	directions_texture_init(t_data *data, char **tmps)
 {
-	char **tmps;
+	if (ft_strncmp(tmps[0], "NO ", 3) == 0 && tmps[1])
+	{
+		data->map->texture_no = ft_strdup(tmps[1]);
+		if (!data->map->texture_no)
+			return (1);
+	}
+	else if (ft_strncmp(tmps[0], "SO ", 3) == 0 && tmps[1])
+	{
+		data->map->texture_so = ft_strdup(tmps[1]);
+		if (!data->map->texture_so)
+			return (1);
+	}
+	else if (ft_strncmp(tmps[0], "WE ", 3) == 0 && tmps[1])
+	{
+		data->map->texture_we = ft_strdup(tmps[1]);
+		if (!data->map->texture_we)
+			return (1);
+	}
+	else if (ft_strncmp(tmps[0], "EA ", 3) == 0 && tmps[1])
+	{
+		data->map->texture_ea = ft_strdup(tmps[1]);
+		if (!data->map->texture_ea)
+			return (1);
+	}
+	return (0);
+}
+
+static int	floor_ceil_init(t_data *data, char **tmps)
+{
 	char **rgb;
 
-	tmps = ft_split(map_info, ' ');
-	if (!tmps)
-		return (1);
 	rgb = ft_split(tmps[1], ',');
-	if (!rgb || !(rgb[0] && rgb[1] && rgb[2]))
-		return (free_all(tmps), 1);
+	if (!rgb)
+		return (1);
 	if (ft_strncmp(tmps[0], "F", 2) == 0 && tmps[1])
-		data->map.color_f = create_rgb(ft_atoi(rgb[0]),
-			ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+		data->map->color_f = create_rgb(rgb[0], rgb[1], rgb[2]);
 	else if (ft_strncmp(tmps[0], "C", 2) == 0 && tmps[1])
-		data->map.color_c = create_rgb(ft_atoi(rgb[0]),
-			ft_atoi(rgb[1]), ft_atoi(rgb[2]));
-	free_all(tmps);
+		data->map->color_c = create_rgb(rgb[0], rgb[1], rgb[2]);
 	free_all(rgb);
-	rgb = NULL;
 	return (0);
+}
+
+static int	create_rgb(char *red, char *green, char *blue)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = ft_atoi(red);
+	g = ft_atoi(green);
+	b = ft_atoi(blue);
+	return (r << 16 | g << 8 | b);
 }

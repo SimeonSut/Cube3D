@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:22 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/18 21:03:25 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/24 21:07:15 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static void	t_player_init(t_player *player, int x, int y, char *dir);
 
 int	player_data_init(t_data *data)
 {
-	data->player.player_nb = 0;
+	data->player->player_nb = 0;
 	if (player_position(data) == 1)
 		return (1);
-	if (data->player.player_nb < 1 || data->player.player_nb > 1)
+	if (data->player->player_nb < 1 || data->player->player_nb > 1)
 		return (1);
 	return (0);
 }
@@ -30,15 +30,15 @@ static int	player_position(t_data *data)
 	int	i;
 	int	j;
 
-	if (!data->map.map)
+	if (!data->map->map)
 		return (1);
 	i = 0;
-	while (data->map.map[i])
+	while (data->map->map[i])
 	{
 		j = 0;
-		while (data->map.map[i][j])
+		while (data->map->map[i][j])
 		{	
-			t_player_init(&data->player, j, i, &data->map.map[i][j]);
+			t_player_init(data->player, j, i, data->map->map[i][j]);
 			j++;			
 		}
 		i++;
@@ -73,7 +73,7 @@ static void	t_player_init(t_player *player, int x, int y, char *dir)
 		{
 			player->dir_x = 0;
 			player->dir_y = 1;
-			player->plane_x = -0.66;
+			player->plane_x = -1;
 			player->plane_y = 0;
 		}
 		else if (*dir == 'W')
@@ -81,7 +81,7 @@ static void	t_player_init(t_player *player, int x, int y, char *dir)
 			player->dir_x = -1;
 			player->dir_y = 0;
 			player->plane_x = 0;
-			player->plane_y = -0.66;
+			player->plane_y = -1;
 		}
 		else if (*dir == 'E')
 		{
