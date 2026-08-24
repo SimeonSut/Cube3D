@@ -14,6 +14,7 @@
 
 static char	**map_info_parser(char *map_path);
 static int	map_data_init(t_data *data, char **map_info);
+static char	**parser_construct(int fd);
 
 /**
 NECESSARY ADDITION 
@@ -42,6 +43,12 @@ int			map_parser(t_data *data, char **av)
 		return (1);
 	}
 	free_all(map_info);
+	if (player_data_init(&data) == 1)
+	{
+		ft_putstr_fd("Player init error\n", 2);
+		free_t_map(data.map);
+		return (1);
+	}
 	return (0);
 }
 
@@ -95,4 +102,28 @@ static int	map_data_init(t_data *data, char **map_info)
 		}
 	}
 	return (0);
+}
+
+static char	**parser_construct(int fd)
+{
+	int		i;
+	char	*map_read;
+	char	**map;
+
+	map = NULL;
+	i = 0;
+	while (1)
+	{
+		map_read = get_next_line(fd);
+		if (!map_read)
+			break ;
+		map = realloc(map, sizeof(char *) * (2 + i));
+		if (!map)
+			return (NULL);
+		map[i] = ft_strdup(map_read);
+		map[i + 1] = NULL;
+		free(map_read);
+		i++;
+	}
+	return (map);
 }

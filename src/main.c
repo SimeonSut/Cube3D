@@ -60,16 +60,9 @@ int main(int ac, char **av)
 		ft_putstr_fd("Expected a file .cub\n", 2);
 		return (0);
 	}
-	//get map info and init data
+	//get map info and init data of map and player
 	if (map_parser(&data, av) == 1)
 		return (1);
-	// init player data
-	if (player_data_init(&data) == 1)
-	{
-		ft_putstr_fd("Player init error\n", 2);
-		free_t_map(data.map);
-		return (0);
-	}
 	map_info = dup_map(data.map.map);
 	if (flood_fill(map_info, data.player.pos_x, data.player.pos_y) == 1)
 	{

@@ -56,7 +56,7 @@ static void	t_player_init(t_player *player, int x, int y, char *dir)
 		//casser tes calculs de collision dès le premier frame).
 
 		//D'où vient la valeur 0.66
-		//La longueur (norme) du vecteur plane détermine l'ouverture du FOV, 
+		//La longueur (norme) du vecteur plane détermine l'ouverture du FOV,
 		//pas juste sa direction. Plus plane est long par rapport à dir
 		//(qui est toujours de norme 1 ici), plus l'angle entre le rayon du
 		//bord gauche et celui du bord droit est grand.
