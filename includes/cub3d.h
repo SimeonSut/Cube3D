@@ -6,6 +6,19 @@
 
 # define FOV 3.1415 / 4
 
+typedef struct s_texture
+{
+    void    *img;
+    int     width;
+    int     height;
+    char    *addr;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+    int     texture_x;
+    int     texture_y;
+}           t_texture;
+
 typedef struct s_img
 {
     void    *img;
