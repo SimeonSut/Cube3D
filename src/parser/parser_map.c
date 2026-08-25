@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 17:22:27 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/25 18:37:27 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,29 @@ int	direction_and_color_init(t_data *data, char *map_info)
 
 static int	directions_texture_init(t_data *data, char **tmps)
 {
-	if (ft_strncmp(tmps[0], "NO ", 3) == 0 && tmps[1])
+	char *t;
+
+	t = ft_strchr(tmps[1], '\n');
+	*t = '\0';
+	if (ft_strncmp(tmps[0], "NO", 2) == 0 && tmps[1])
 	{
 		data->map->texture_no = ft_strdup(tmps[1]);
 		if (!data->map->texture_no)
 			return (1);
 	}
-	else if (ft_strncmp(tmps[0], "SO ", 3) == 0 && tmps[1])
+	else if (ft_strncmp(tmps[0], "SO", 2) == 0 && tmps[1])
 	{
 		data->map->texture_so = ft_strdup(tmps[1]);
 		if (!data->map->texture_so)
 			return (1);
 	}
-	else if (ft_strncmp(tmps[0], "WE ", 3) == 0 && tmps[1])
+	else if (ft_strncmp(tmps[0], "WE", 2) == 0 && tmps[1])
 	{
 		data->map->texture_we = ft_strdup(tmps[1]);
 		if (!data->map->texture_we)
 			return (1);
 	}
-	else if (ft_strncmp(tmps[0], "EA ", 3) == 0 && tmps[1])
+	else if (ft_strncmp(tmps[0], "EA", 2) == 0 && tmps[1])
 	{
 		data->map->texture_ea = ft_strdup(tmps[1]);
 		if (!data->map->texture_ea)

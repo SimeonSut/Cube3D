@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 15:53:36 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 17:25:42 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/25 18:23:17 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ int main(int ac, char **av)
 		return (1);
 	if (parsing(data, av) == 1)
 		return (1);
+    printf("%s", data->map->texture_no);
+    printf("%s", data->map->texture_so);
+    printf("%s", data->map->texture_we);
+    printf("%s", data->map->texture_ea);
 	data->mlx = mlx_init();
 	if (!data->mlx)
 	{
@@ -92,6 +96,7 @@ int main(int ac, char **av)
 	data->screen->img = mlx_new_image(data->mlx, 1920, 1080);
 	data->screen->addr = mlx_get_data_addr(data->screen->img, &data->screen->bits_per_pixel,
 		&data->screen->line_length, &data->screen->endian);
+    texture_init(data);
 	map_d_render(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0, (int (*)())(void *)key_config, data);
 	mlx_loop(data->mlx);
