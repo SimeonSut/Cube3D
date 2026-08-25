@@ -8,14 +8,22 @@
 # include <stdlib.h>
 # include "cub3d.h"
 
-int		map_parser(t_data *data, char **av);
+//PARSER.C
+int		parsing(t_data *data, char **av);
+
+//PARSER_MAP.C
+int		direction_and_color_init(t_data *data, char *map_info);
+
+//PARSER_PLAYER.C
 int		player_data_init(t_data *data);
-int	    dir_color_init(t_data *data, char *map_info);
-int     dir_init(t_data *data, char *map_info);
-int	    floor_ceil_init(t_data *data, char *map_info);
+
+//PARSER_TOOLS.C
 char	**dup_map(char **map);
-void	free_t_map(t_map map_data);
-int     flood_fill(char **map_data, int p_x, int p_y);
-int	    player_position(t_data *data);
+int		flood_fill(char **map_data, int p_x, int p_y);
+int		is_valid(char *line, int mode);
+
+//MEMORY.C
+t_data	*t_data_init(void);
+void	free_data(t_data *data);
 
 #endif

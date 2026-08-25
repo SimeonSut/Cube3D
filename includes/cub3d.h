@@ -3,6 +3,7 @@
 
 # include <stdio.h>
 # include <math.h>
+# include <mlx.h>
 
 typedef struct s_img
 {
@@ -50,11 +51,11 @@ typedef struct s_data
 {
 	void        *mlx;
 	void        *mlx_win;
-	t_player    player;
-	t_map       map;
-	t_img       img;
-	t_img       img_p;
-	t_img       screen;
+	t_player    *player;
+	t_map       *map;
+	t_img       *img;
+	t_img       *img_p;
+	t_img       *screen;
 }               t_data;
 
 #endif

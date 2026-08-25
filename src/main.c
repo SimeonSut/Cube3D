@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/25 15:53:36 by ssutarmi          #+#    #+#             */
+/*   Updated: 2026/08/25 17:11:39 by ssutarmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "render.h"
 
@@ -8,8 +20,8 @@
 
 void    movements(t_data *data, double x, double y)
 {
-	data->player.pos_x += x;
-	data->player.pos_y += y;
+	data->player->pos_x += x;
+	data->player->pos_y += y;
 }
 
 int key_config(int keycode, void *param)
@@ -29,102 +41,59 @@ int key_config(int keycode, void *param)
 		movements(data, 0.05, 0);
 	else if (keycode == 'q')
 	{
-		old_dir_x = data->player.dir_x;
-		data->player.dir_x = data->player.dir_x * cos(-0.03) - data->player.dir_y * sin(-0.03);
-		data->player.dir_y = old_dir_x * sin(-0.03) + data->player.dir_y * cos(-0.03);
-		old_plane_x = data->player.plane_x;
-		data->player.plane_x = data->player.plane_x * cos(-0.03) - data->player.plane_y * sin(-0.03);
-		data->player.plane_y = old_plane_x * sin(-0.03) + data->player.plane_y * cos(-0.03);
+		old_dir_x = data->player->dir_x;
+		data->player->dir_x = data->player->dir_x * cos(-0.03) - data->player->dir_y * sin(-0.03);
+		data->player->dir_y = old_dir_x * sin(-0.03) + data->player->dir_y * cos(-0.03);
+		old_plane_x = data->player->plane_x;
+		data->player->plane_x = data->player->plane_x * cos(-0.03) - data->player->plane_y * sin(-0.03);
+		data->player->plane_y = old_plane_x * sin(-0.03) + data->player->plane_y * cos(-0.03);
 	}
 	else if (keycode == 'e')
 	{
-		old_dir_x = data->player.dir_x;
-		data->player.dir_x = data->player.dir_x * cos(0.03) - data->player.dir_y * sin(0.03);
-		data->player.dir_y = old_dir_x * sin(0.03) + data->player.dir_y * cos(0.03);
-		old_plane_x = data->player.plane_x;
-		data->player.plane_x = data->player.plane_x * cos(0.03) - data->player.plane_y * sin(0.03);
-		data->player.plane_y = old_plane_x * sin(0.03) + data->player.plane_y * cos(0.03);
+		old_dir_x = data->player->dir_x;
+		data->player->dir_x = data->player->dir_x * cos(0.03) - data->player->dir_y * sin(0.03);
+		data->player->dir_y = old_dir_x * sin(0.03) + data->player->dir_y * cos(0.03);
+		old_plane_x = data->player->plane_x;
+		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
+		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
 	}
-	//map_render(data);
 	map_d_render(data);
 	return (0);
 }
 
 int main(int ac, char **av)
 {
-	t_data  data;
-	char	**map_info;
+	t_data  *data;
 
 	if (ac != 2)
 	{
 		ft_putstr_fd("Expected a file .cub\n", 2);
 		return (0);
 	}
-	//get map info and init data of map and player
-	if (map_parser(&data, av) == 1)
+	data = t_data_init();
+	if (!data)
 		return (1);
-	map_info = dup_map(data.map.map);
-	if (flood_fill(map_info, data.player.pos_x, data.player.pos_y) == 1)
-	{
-		ft_putstr_fd("Map invalid: Player is not surround by wall !\n", 2);
-		free_all(map_info);
-		free_t_map(data.map);
-		return (0);
-	}
-	free_all(map_info);
-	// init mlx data
-	data.mlx = mlx_init();
-	if (!data.mlx)
+	if (parsing(data, av) == 1)
+		return (1);
+	data->mlx = mlx_init();
+	if (!data->mlx)
 	{
 		ft_putstr_fd("mlx init failed\n", 2);
-		free_t_map(data.map);
+		free_data(data);
 		return (0);
 	}
-	data.mlx_win = mlx_new_window(data.mlx, 1920, 1080, "TMP_TEST");
-	if (!data.mlx_win)
+	data->mlx_win = mlx_new_window(data->mlx, 1920, 1080, "TMP_TEST");
+	if (!data->mlx_win)
 	{
 		ft_putstr_fd("new window fail\n",2);
-		free_t_map(data.map);
+		free_data(data);
 		return (0);
 	}
-	// create a squar 64
-	data.img.img = mlx_new_image(data.mlx, 64, 64);
-	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bits_per_pixel,
-		&data.img.line_length, &data.img.endian);
-	draw_squar(&data.img, 64, 0x13031990);
-	// create a player 
-	data.img_p.img = mlx_new_image(data.mlx, 32, 32);
-	data.img_p.addr = mlx_get_data_addr(data.img_p.img, &data.img_p.bits_per_pixel,
-		&data.img_p.line_length, &data.img_p.endian);
-	draw_squar(&data.img_p, 32, 0x00FF0000);
-	// map render 2D
-	//map_render(&data);
-
-	// map render 3D
-	data.screen.img = mlx_new_image(data.mlx, 1920, 1080);
-	data.screen.addr = mlx_get_data_addr(data.screen.img, &data.screen.bits_per_pixel,
-		&data.screen.line_length, &data.screen.endian);
-	map_d_render(&data);
-	//map_render(&data); 
-	// key hook
-	mlx_hook(data.mlx_win, 2, 1L<<0, (int (*)())(void *)key_config, &data);
-	mlx_loop(data.mlx);
+	data->screen->img = mlx_new_image(data->mlx, 1920, 1080);
+	data->screen->addr = mlx_get_data_addr(data->screen->img, &data->screen->bits_per_pixel,
+		&data->screen->line_length, &data->screen->endian);
+	map_d_render(data);
+	mlx_hook(data->mlx_win, 2, 1L<<0, (int (*)())(void *)key_config, data);
+	mlx_loop(data->mlx);
 	return (0);
-}
-
-t_data	*t_data_init(void)
-{
-	t_data	*new;
-
-	new = malloc(sizeof(t_data));
-	if (!new)
-		return (NULL);
-	new->mlx = NULL;
-	new->mlx_win = NULL;
-	new->player = NULL:
-	new->map = NULL;
-	new->img = NULL;
-	new->img_p = NULL;
-	new->screen = NULL;
-	return (new);
 }

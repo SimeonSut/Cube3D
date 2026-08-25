@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/24 20:58:25 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/25 16:33:16 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	direction_and_color_init(t_data *data, char *map_info)
 
 	if (is_valid(map_info, 0) != 0)
 		return (0);
-	tmps == ft_split(map_info, ' ');
+	tmps = ft_split(map_info, ' ');
 	if (!tmps)
 		return (1);
 	if (is_valid(map_info, 1) == 0)
@@ -35,7 +35,7 @@ int	direction_and_color_init(t_data *data, char *map_info)
 	}
 	else if (is_valid(map_info, 2) == 0)
 	{
-		if (floor_ceil_init(data, map_info) != 0)
+		if (floor_ceil_init(data, tmps) != 0)
 		{
 			free_all(tmps);
 			return (1);

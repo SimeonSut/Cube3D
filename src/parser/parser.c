@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/24 20:45:09 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/25 16:52:23 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,7 @@ static char	**map_info_parser(char *map_path);
 static char	**parser_construct(int fd);
 static int	map_data_init(t_data *data, char **map_info);
 
-/*
-NECESSARY ADDITION 
-
-Add function to filter inputs of the map
-
-Conditions :
-
-Only 0 and 1 except for one char letter.
-The ONLY char letter is either N, S, E, or W
-*/
-
-int			map_parser(t_data *data, char **av)
+int			parsing(t_data *data, char **av)
 {
 	char	**map_info;
 
@@ -37,18 +26,19 @@ int			map_parser(t_data *data, char **av)
 	if (map_data_init(data, map_info) != 0)
 	{
 		ft_putstr_fd("Map parsing failed !\n", 2);
-		free_all(map_info);
-		free_t_map(data->map);
-		return (1);
+		return (free_data(data), free_all(map_info), 1);
 	}
-	free_all(map_info);
 	if (player_data_init(data) == 1)
 	{
 		ft_putstr_fd("Player init error\n", 2);
-		free_t_map(data->map);
-		return (1);
+		return (free_data(data), 1);
 	}
-	return (0);
+	if (flood_fill(map_info, data->player->pos_x, data->player->pos_y) == 1)
+	{
+		ft_putstr_fd("Map invalid: Player is not surround by wall !\n", 2);
+		return (free_data(data), free_all(map_info), 1);
+	}
+	return (free_all(map_info), 0);
 }
 
 static char	**map_info_parser(char *map_path)
@@ -110,7 +100,7 @@ static int	map_data_init(t_data *data, char **map_info)
 	{
 		if (direction_and_color_init(data, map_info[i]) != 0)
 			return (1);
-		if (map_info[i][0] != '\n' && is_valid(map_info[i], 0) == 0)
+		if (map_info[i][0] != '\n' && is_valid(map_info[i], 0) != 0)
 		{
 			data->map->map = realloc(data->map->map, sizeof(char *) * (2 + map_counter));
 			if (!data->map->map)

@@ -29,29 +29,6 @@ void    draw_squar(void *img, int size, int color)
 	}
 }
 
-void    map_render(t_data *data)
-{
-	int y;
-	int x;
-
-	mlx_clear_window(data->mlx, data->mlx_win);
-	y = 0;
-	while (data->map.map[y])
-	{
-		x = 0;
-		while (data->map.map[y][x])
-		{
-			if (data->map.map[y][x] == '1')
-				mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.img,
-					x * 64, y * 64);
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p.img,
-		data->player.pos_x * 64, data->player.pos_y * 64);
-}
-
 //fait tout le travail du raycasting pour une frame complète : 
 //elle transforme la position et l'orientation du joueur en une image 3D, 
 //colonne par colonne.
@@ -60,14 +37,14 @@ void    map_d_render(t_data *data)
 	int x;
 	int y;
 	//vider entièrement le buffer - remet tous les pixels a 0;
-	ft_memset(data->screen.addr, 0, data->screen.line_length * 1080);
+	ft_memset(data->screen->addr, 0, data->screen->line_length * 1080);
 	y = 0;
 	x = 0;
 	//récupère dans des variables locales (dir_x, dir_y, plane_x, plane_y)
-	double  dir_x = data->player.dir_x;
-	double  dir_y = data->player.dir_y;
-	double  plane_x = data->player.plane_x;
-	double  plane_y = data->player.plane_y;
+	double  dir_x = data->player->dir_x;
+	double  dir_y = data->player->dir_y;
+	double  plane_x = data->player->plane_x;
+	double  plane_y = data->player->plane_y;
 	//Pour chaque x : elle calcule camera_x (la position normalisée de cette colonne entre -1 et 1)
 	double  camera_x = 2.0 * x / 1920 - 1;
 	//ray_dir_x/ray_dir_y (la direction du rayon envoyé pour cette colonne précise, 
@@ -75,8 +52,8 @@ void    map_d_render(t_data *data)
 	double  ray_dir_x = dir_x + plane_x * camera_x;
 	double  ray_dir_y = dir_y + plane_y * camera_x;
 	//map_x/map_y à la position actuelle du joueur
-	int     map_x = (int)data->player.pos_x;
-	int     map_y = (int)data->player.pos_y;
+	int     map_x = (int)data->player->pos_x;
+	int     map_y = (int)data->player->pos_y;
 	//delta_dist_x/delta_dist_y pour ce rayon spécifique.
 	double  delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
 	double  delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
@@ -90,22 +67,22 @@ void    map_d_render(t_data *data)
 	if (ray_dir_x < 0)
 	{
 		step_x = -1;
-		side_dist_x = (data->player.pos_x - (double)map_x) * delta_dist_x;
+		side_dist_x = (data->player->pos_x - (double)map_x) * delta_dist_x;
 	}
 	else
 	{
 		step_x = 1;
-		side_dist_x = ((double)map_x + 1.0 - data->player.pos_x) * delta_dist_x;
+		side_dist_x = ((double)map_x + 1.0 - data->player->pos_x) * delta_dist_x;
 	}
 	if (ray_dir_y < 0)
 	{
 		step_y = -1;
-		side_dist_y = (data->player.pos_y - (double)map_y) * delta_dist_y;
+		side_dist_y = (data->player->pos_y - (double)map_y) * delta_dist_y;
 	}
 	else
 	{
 		step_y = 1;
-		side_dist_y = ((double)map_y + 1.0 - data->player.pos_y) * delta_dist_y;
+		side_dist_y = ((double)map_y + 1.0 - data->player->pos_y) * delta_dist_y;
 	}
 	//la boucle while (!hit) fait avancer le rayon case par case dans la grille : 
 	//à chaque itération, elle compare side_dist_x et side_dist_y, avance sur l'axe le plus proche, 
@@ -127,7 +104,7 @@ void    map_d_render(t_data *data)
 			map_y += step_y;
 			side = 1;
 		}
-		if (data->map.map[map_y][map_x] == '1')
+		if (data->map->map[map_y][map_x] == '1')
 			hit = 1;
 	}
 	//Une fois le mur localisé, elle calcule perp_wall_dist — 
@@ -170,29 +147,29 @@ void    map_d_render(t_data *data)
 		camera_x = 2.0 * x / 1920 - 1;
 		ray_dir_x = dir_x + plane_x * camera_x;
 		ray_dir_y = dir_y + plane_y * camera_x;
-		map_x = (int)data->player.pos_x;
-		map_y = (int)data->player.pos_y;
+		map_x = (int)data->player->pos_x;
+		map_y = (int)data->player->pos_y;
 		delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
 		delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
 		if (ray_dir_x < 0)
 		{
 			step_x = -1;
-			side_dist_x = (data->player.pos_x - (double)map_x) * delta_dist_x;
+			side_dist_x = (data->player->pos_x - (double)map_x) * delta_dist_x;
 		}
 		else
 		{
 			step_x = 1;
-			side_dist_x = ((double)map_x + 1.0 - data->player.pos_x) * delta_dist_x;
+			side_dist_x = ((double)map_x + 1.0 - data->player->pos_x) * delta_dist_x;
 		}
 		if (ray_dir_y < 0)
 		{
 			step_y = -1;
-			side_dist_y = (data->player.pos_y - (double)map_y) * delta_dist_y;
+			side_dist_y = (data->player->pos_y - (double)map_y) * delta_dist_y;
 		}
 		else
 		{
 			step_y = 1;
-			side_dist_y = ((double)map_y + 1.0 - data->player.pos_y) * delta_dist_y;
+			side_dist_y = ((double)map_y + 1.0 - data->player->pos_y) * delta_dist_y;
 		}
 		hit = 0;
 		while (!hit)
@@ -209,7 +186,7 @@ void    map_d_render(t_data *data)
 				map_y += step_y;
 				side = 1;
 			}
-			if (data->map.map[map_y][map_x] www== '1')
+			if (data->map->map[map_y][map_x] == '1')
 				hit = 1;
 		}
 		if (side == 0)
@@ -230,11 +207,11 @@ void    map_d_render(t_data *data)
 		y = draw_start;
 		while (y <= draw_end)
 		{
-			my_mlx_pixel_put(&data->screen, x, y, color);
+			my_mlx_pixel_put(data->screen, x, y, color);
 			y++;
 		}
 		x++;
 	}
 	//Une fois les 1920 colonnes traitées, un seul mlx_put_image_to_window affiche le buffer entier d'un coup
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen->img, 0, 0);
 }

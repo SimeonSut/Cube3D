@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/24 21:18:16 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/25 14:09:06 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ char	**dup_map(char **map)
 
 int	is_valid(char *line, int mode)
 {
-	if ((mode == 0 || mode == 1) && ft_strncmp(line, "NO ", 4) == 0)
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "NO ", 3) == 0)
 		return (0);
-	if ((mode == 0 || mode == 1) && ft_strncmp(line, "SO ", 4) == 0)
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "SO ", 3) == 0)
 		return (0);
-	if ((mode == 0 || mode == 1) && ft_strncmp(line, "WE ", 4) == 0)
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "WE ", 3) == 0)
 		return (0);
-	if ((mode == 0 || mode == 1) && ft_strncmp(line, "EA ", 4) == 0)
+	if ((mode == 0 || mode == 1) && ft_strncmp(line, "EA ", 3) == 0)
 		return (0);
-	if ((mode == 0 || mode == 2) && ft_strncmp(line, "F ", 3) == 0)
+	if ((mode == 0 || mode == 2) && ft_strncmp(line, "F ", 2) == 0)
 		return (0);
-	if ((mode == 0 || mode == 2) && ft_strncmp(line, "C ", 3) == 0)
+	if ((mode == 0 || mode == 2) && ft_strncmp(line, "C ", 2) == 0)
 		return (0);
 	return (1);
 }
