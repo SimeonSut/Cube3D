@@ -3,63 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 15:53:36 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 18:23:17 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/25 21:09:22 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "render.h"
-
-//119 w
-//115 s
-//97 a
-//100 d
-
-void    movements(t_data *data, double x, double y)
-{
-	data->player->pos_x += x;
-	data->player->pos_y += y;
-}
-
-int key_config(int keycode, void *param)
-{
-	t_data  *data;
-	double  old_dir_x;
-	double  old_plane_x;
-
-	data = param;
-	if (keycode == 'w')
-		movements(data, 0, -0.05);
-	else if (keycode == 's')
-		movements(data, 0, 0.05);
-	else if (keycode == 'a')
-		movements(data, -0.05, 0);
-	else if (keycode == 'd')
-		movements(data, 0.05, 0);
-	else if (keycode == 'q')
-	{
-		old_dir_x = data->player->dir_x;
-		data->player->dir_x = data->player->dir_x * cos(-0.03) - data->player->dir_y * sin(-0.03);
-		data->player->dir_y = old_dir_x * sin(-0.03) + data->player->dir_y * cos(-0.03);
-		old_plane_x = data->player->plane_x;
-		data->player->plane_x = data->player->plane_x * cos(-0.03) - data->player->plane_y * sin(-0.03);
-		data->player->plane_y = old_plane_x * sin(-0.03) + data->player->plane_y * cos(-0.03);
-	}
-	else if (keycode == 'e')
-	{
-		old_dir_x = data->player->dir_x;
-		data->player->dir_x = data->player->dir_x * cos(0.03) - data->player->dir_y * sin(0.03);
-		data->player->dir_y = old_dir_x * sin(0.03) + data->player->dir_y * cos(0.03);
-		old_plane_x = data->player->plane_x;
-		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
-		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
-	}
-	map_d_render(data);
-	return (0);
-}
 
 int main(int ac, char **av)
 {
@@ -75,10 +27,6 @@ int main(int ac, char **av)
 		return (1);
 	if (parsing(data, av) == 1)
 		return (1);
-    printf("%s", data->map->texture_no);
-    printf("%s", data->map->texture_so);
-    printf("%s", data->map->texture_we);
-    printf("%s", data->map->texture_ea);
 	data->mlx = mlx_init();
 	if (!data->mlx)
 	{

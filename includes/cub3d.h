@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
+/*   Updated: 2026/08/25 21:13:14 by ssutarmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -5,7 +17,7 @@
 # include <math.h>
 # include <mlx.h>
 
-# define FOV 3.1415 / 4
+# define FOV M_PI / 4
 
 typedef struct s_texture
 {
@@ -103,5 +115,7 @@ typedef struct s_data
     t_texture   texture[4];
     int         tex_index;
 }               t_data;
+
+# define MOV_SPEED 0.05
 
 #endif
