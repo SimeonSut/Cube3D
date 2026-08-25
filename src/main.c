@@ -129,7 +129,7 @@ int main(int ac, char **av)
     my_mlx_pixel_put(&data.v_plane, 0, 0, 0x00A1FF);
     // map render 2D
     //map_render(&data);
-
+    texture_init(&data);
     // map render 3D
     data.screen.img = mlx_new_image(data.mlx, 1920, 1080);
     data.screen.addr = mlx_get_data_addr(data.screen.img, &data.screen.bits_per_pixel,

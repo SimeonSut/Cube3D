@@ -6,7 +6,7 @@ PARSER_PATH = src/parser/
 RENDER_PATH = src/render/
 
 SRC_PARSER = parser.c parser_tools.c parser_map.c parser_player.c
-SRC_RENDER = render.c
+SRC_RENDER = render.c texture.c
 
 SRCS = 	src/main.c \
 		$(addprefix $(PARSER_PATH), $(SRC_PARSER)) \

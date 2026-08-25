@@ -251,12 +251,13 @@ void    map_d_render(t_data *data)
         data->ray.draw_end = data->ray.line_height / 2 + 1080 / 2;
         if (data->ray.draw_start < 0) data->ray.draw_start = 0;
         if (data->ray.draw_end >= 1080) data->ray.draw_end = 1080 - 1;
+        texture_mapping_x(data);
         y = 0;
         while (y < 1080)
         {
             if (y >= data->ray.draw_start && y <= data->ray.draw_end)
             {
-                my_mlx_pixel_put(&data->screen, x, y, 0x13031990);
+                texture_mapping_y_draw(data, x, y);
             }
             else if (y < (1080 / 2))
                 my_mlx_pixel_put(&data->screen, x, y, data->map.color_f);
