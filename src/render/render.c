@@ -1,8 +1,5 @@
 #include "render.h"
 
-static  void    texture_set(t_data *data);
-static  void    draw_texture(t_data *data);
-
 void    my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
     char *dst;
@@ -254,62 +251,21 @@ void    map_d_render(t_data *data)
         data->ray.draw_end = data->ray.line_height / 2 + 1080 / 2;
         if (data->ray.draw_start < 0) data->ray.draw_start = 0;
         if (data->ray.draw_end >= 1080) data->ray.draw_end = 1080 - 1;
-        int color = 0x13031990;
-        if (data->ray.side == 1)
-            color = color / 2;
-        y = data->ray.draw_start;
-        while (y <= data->ray.draw_end)
+        y = 0;
+        while (y < 1080)
         {
-            draw_texture(data);
-            my_mlx_pixel_put(&data->screen, x, y, data->texture.pixel_color);
+            if (y >= data->ray.draw_start && y <= data->ray.draw_end)
+            {
+                my_mlx_pixel_put(&data->screen, x, y, 0x13031990);
+            }
+            else if (y < (1080 / 2))
+                my_mlx_pixel_put(&data->screen, x, y, data->map.color_f);
+            else
+                my_mlx_pixel_put(&data->screen, x, y, data->map.color_c);
             y++;
         }
         x++;
     }
     //Une fois les 1920 colonnes traitées, un seul mlx_put_image_to_window affiche le buffer entier d'un coup
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
-}
-
-// set la texture par rapport le cote touche par le rayon et ray direction
-static  void    texture_set(t_data *data)
-{
-    if (data->ray.side == 0)
-    {
-        if (data->ray.ray_dir_x < 0)
-            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_no,
-                &data->texture.width, &data->texture.height);
-        else
-            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_so,
-                &data->texture.width, &data->texture.height);
-    }
-    else
-    {
-        if (data->ray.ray_dir_y < 0)
-            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_we,
-                &data->texture.width, &data->texture.height);
-        else
-            data->texture.img = mlx_xpm_file_to_image(data->mlx, data->map.texture_ea,
-                &data->texture.width, &data->texture.height);
-    }
-    data->texture.addr = mlx_get_data_addr(data->texture.img, &data->texture.bits_per_pixel,
-        &data->texture.line_length, &data->texture.endian);
-}
-
-static  void    draw_texture(t_data *data)
-{
-    texture_set(data);
-    if (data->ray.side == 0)
-        data->ray.wall_x = data->player.pos_y + data->ray.perp_wall_dist * data->ray.ray_dir_y;
-    else
-        data->ray.wall_x = data->player.pos_x + data->ray.perp_wall_dist * data->ray.ray_dir_x;
-    data->ray.wall_x -= floor(data->ray.wall_x);
-    data->texture.texture_x = (int)(data->ray.wall_x * data->texture.width);
-    data->texture.step = (double)data->texture.height / data->ray.line_height;
-    data->texture.texture_pos = (data->ray.draw_start - 1080 / 2 + data->ray.line_height / 2) * data->texture.step;
-    data->texture.texture_y = (int)data->texture.texture_pos & (data->texture.height - 1);
-    data->texture.texture_pos += data->texture.step;
-    data->texture.pixel_color = *(unsigned int *)(data->texture.addr +
-        (data->texture.texture_y * data->texture.line_length + data->texture.texture_x *
-        (data->texture.bits_per_pixel / 8)));
-    
-}
+}     

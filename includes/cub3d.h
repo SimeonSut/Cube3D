@@ -99,7 +99,8 @@ typedef struct s_data
     t_img       v_plane;
     t_img       screen;
     t_ray       ray;
-    t_texture   texture;
+    t_texture   texture[4];
+    int         tex_index;
 }               t_data;
 
 #endif

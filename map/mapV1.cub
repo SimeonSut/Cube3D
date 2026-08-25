@@ -1,7 +1,7 @@
 NO sprites/redbrick.xpm
-SO sprite/purplestone.xpm
-WE sprite/wood.xpm
-EA sprite/greystone.xpm
+SO sprites/purplestone.xpm
+WE sprites/wood.xpm
+EA sprites/greystone.xpm
 
 F 220,100,0
 C 225,30,0
