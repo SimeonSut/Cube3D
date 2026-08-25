@@ -2,16 +2,16 @@
 
 void    my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
-    char *dst;
+	char *dst;
 
-    dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 void    draw_squar(void *img, int size, int color, int mode)
 {
-    int y;
-    int x;
+	int y;
+	int x;
 
     if (mode == 0)
     {
@@ -53,31 +53,31 @@ void    map_render(t_data *data)
 
     mlx_clear_window(data->mlx, data->mlx_win);
     y = 0;
-    while (data->map.map[y])
+    while (data->map->map[y])
     {
         x = 0;
-        while (data->map.map[y][x])
+        while (data->map->map[y][x])
         {
-            if (data->map.map[y][x] == '1')
-                mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.img,
+            if (data->map->map[y][x] == '1')
+                mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img,
                     x * 64, y * 64);
             else
-                mlx_put_image_to_window(data->mlx, data->mlx_win, data->grill.img,
+                mlx_put_image_to_window(data->mlx, data->mlx_win, data->grill->img,
                     x * 64, y * 64);
             x++;
         }
         y++;
     }
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p.img,
-        data->player.pos_x * 64, data->player.pos_y * 64);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p->img,
+        data->player->pos_x * 64, data->player->pos_y * 64);
     int len = 0;
     int tile_size = 64;
 
     while (len < tile_size)
     {
-        mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir.img,
-            (data->player.pos_x * tile_size) + data->player.dir_x * len,
-            (data->player.pos_y * tile_size) + data->player.dir_y * len);
+        mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir->img,
+            (data->player->pos_x * tile_size) + data->player->dir_x * len,
+            (data->player->pos_y * tile_size) + data->player->dir_y * len);
         len++;
     }
     x = 0;
@@ -85,10 +85,10 @@ void    map_render(t_data *data)
     while (x < nb_rays)
     {
         double camera_x = 2.0 * x / nb_rays - 1;
-        double ray_dir_x = data->player.dir_x + data->player.plane_x * camera_x;
-        double ray_dir_y = data->player.dir_y + data->player.plane_y * camera_x;
-        int map_x = (int)data->player.pos_x;
-        int map_y = (int)data->player.pos_y;
+        double ray_dir_x = data->player->dir_x + data->player->plane_x * camera_x;
+        double ray_dir_y = data->player->dir_y + data->player->plane_y * camera_x;
+        int map_x = (int)data->player->pos_x;
+        int map_y = (int)data->player->pos_y;
         double delta_dist_x = fabs(1 / ray_dir_x);
         double delta_dist_y = fabs(1 / ray_dir_y);
         double side_dist_x = 0;
@@ -98,22 +98,22 @@ void    map_render(t_data *data)
         if (ray_dir_x < 0)
         {
             step_x = -1;
-            side_dist_x = (data->player.pos_x - (double)map_x) * delta_dist_x;
+            side_dist_x = (data->player->pos_x - (double)map_x) * delta_dist_x;
         }
         else
         {
             step_x = 1;
-            side_dist_x = ((double)map_x + 1.0 - data->player.pos_x) * delta_dist_x;
+            side_dist_x = ((double)map_x + 1.0 - data->player->pos_x) * delta_dist_x;
         }
         if (ray_dir_y < 0)
         {
             step_y = -1;
-            side_dist_y = (data->player.pos_y - (double)map_y) * delta_dist_y;
+            side_dist_y = (data->player->pos_y - (double)map_y) * delta_dist_y;
         }
         else
         {
             step_y = 1;
-            side_dist_y = ((double)map_y + 1.0 - data->player.pos_y) * delta_dist_y;
+            side_dist_y = ((double)map_y + 1.0 - data->player->pos_y) * delta_dist_y;
         }
         int hit = 0;
         len = 0;
@@ -124,9 +124,9 @@ void    map_render(t_data *data)
             {
                 while (len < (side_dist_x * tile_size))
                 {
-                    mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir.img,
-                        (data->player.pos_x * tile_size) + ray_dir_x * len,
-                        (data->player.pos_y * tile_size) + ray_dir_y * len);
+                    mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_dir->img,
+                        (data->player->pos_x * tile_size) + ray_dir_x * len,
+                        (data->player->pos_y * tile_size) + ray_dir_y * len);
                     len++;
                 }
                 side_dist_x += delta_dist_x;
@@ -136,15 +136,15 @@ void    map_render(t_data *data)
             {
                 while (len < (side_dist_y * tile_size))
                 {
-                    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p.img,
-                        (data->player.pos_x * tile_size) + ray_dir_x * len,
-                        (data->player.pos_y * tile_size) + ray_dir_y * len);
+                    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_p->img,
+                        (data->player->pos_x * tile_size) + ray_dir_x * len,
+                        (data->player->pos_y * tile_size) + ray_dir_y * len);
                     len++;
                 }
                 side_dist_y += delta_dist_y;
                 map_y += step_y;
             }
-            if (data->map.map[map_y][map_x] == '1')
+            if (data->map->map[map_y][map_x] == '1')
                 hit = 1;
         }
         x++;
@@ -152,9 +152,9 @@ void    map_render(t_data *data)
     len = -tile_size;
     while (len < tile_size)
     {
-        mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_plane.img,
-            (data->player.pos_x * tile_size) + (data->player.dir_x * tile_size) + data->player.plane_x * len,
-            (data->player.pos_y * tile_size) + (data->player.dir_y * tile_size) + data->player.plane_y * len);
+        mlx_put_image_to_window(data->mlx, data->mlx_win, data->v_plane->img,
+            (data->player->pos_x * tile_size) + (data->player->dir_x * tile_size) + data->player->plane_x * len,
+            (data->player->pos_y * tile_size) + (data->player->dir_y * tile_size) + data->player->plane_y * len);
         len++;
     }
 }
@@ -167,7 +167,7 @@ void    map_d_render(t_data *data)
     int x;
     int y;
     //vider entièrement le buffer - remet tous les pixels a 0;
-    ft_memset(data->screen.addr, 0, data->screen.line_length * 1080);
+    ft_memset(data->screen->addr, 0, data->screen->line_length * 1080);
     y = 0;
     x = 0;
     //récupère dans des variables locales (dir_x, dir_y, plane_x, plane_y)
@@ -178,11 +178,11 @@ void    map_d_render(t_data *data)
         data->ray.camera_x = 2.0 * x / 1920 - 1;
         //ray_dir_x/ray_dir_y (la direction du rayon envoyé pour cette colonne précise, 
         //en combinant dir et plane pondérés par camera_x)
-        data->ray.ray_dir_x = data->player.dir_x + data->player.plane_x * data->ray.camera_x;
-        data->ray.ray_dir_y = data->player.dir_y + data->player.plane_y * data->ray.camera_x;
+        data->ray.ray_dir_x = data->player->dir_x + data->player->plane_x * data->ray.camera_x;
+        data->ray.ray_dir_y = data->player->dir_y + data->player->plane_y * data->ray.camera_x;
         //map_x/map_y à la position actuelle du joueur
-        data->ray.map_x = (int)data->player.pos_x;
-        data->ray.map_y = (int)data->player.pos_y;
+        data->ray.map_x = (int)data->player->pos_x;
+        data->ray.map_y = (int)data->player->pos_y;
         //delta_dist_x/delta_dist_y la longueur de ce rayon spécifique avancer de 1.
         data->ray.delta_dist_x = (data->ray.ray_dir_x == 0) ? 1e30 : fabs(1 / data->ray.ray_dir_x);
         data->ray.delta_dist_y = (data->ray.ray_dir_y == 0) ? 1e30 : fabs(1 / data->ray.ray_dir_y);
@@ -193,22 +193,22 @@ void    map_d_render(t_data *data)
         if (data->ray.ray_dir_x < 0)
         {
             data->ray.step_x = -1;
-            data->ray.side_dist_x = (data->player.pos_x - (double)data->ray.map_x) * data->ray.delta_dist_x;
+            data->ray.side_dist_x = (data->player->pos_x - (double)data->ray.map_x) * data->ray.delta_dist_x;
         }
         else
         {
             data->ray.step_x = 1;
-            data->ray.side_dist_x = ((double)data->ray.map_x + 1.0 - data->player.pos_x) * data->ray.delta_dist_x;
+            data->ray.side_dist_x = ((double)data->ray.map_x + 1.0 - data->player->pos_x) * data->ray.delta_dist_x;
         }
         if (data->ray.ray_dir_y < 0)
         {
             data->ray.step_y = -1;
-            data->ray.side_dist_y = (data->player.pos_y - (double)data->ray.map_y) * data->ray.delta_dist_y;
+            data->ray.side_dist_y = (data->player->pos_y - (double)data->ray.map_y) * data->ray.delta_dist_y;
         }
         else
         {
             data->ray.step_y = 1;
-            data->ray.side_dist_y = ((double)data->ray.map_y + 1.0 - data->player.pos_y) * data->ray.delta_dist_y;
+            data->ray.side_dist_y = ((double)data->ray.map_y + 1.0 - data->player->pos_y) * data->ray.delta_dist_y;
         }
         //la boucle while (!hit) fait avancer le rayon case par case dans la grille : 
         //à chaque itération, elle compare side_dist_x et side_dist_y, avance sur l'axe le plus proche, 
@@ -260,13 +260,13 @@ void    map_d_render(t_data *data)
                 texture_mapping_y_draw(data, x, y);
             }
             else if (y < (1080 / 2))
-                my_mlx_pixel_put(&data->screen, x, y, data->map.color_f);
+                my_mlx_pixel_put(&data->screen, x, y, data->map->color_f);
             else
-                my_mlx_pixel_put(&data->screen, x, y, data->map.color_c);
+                my_mlx_pixel_put(&data->screen, x, y, data->map->color_c);
             y++;
         }
         x++;
     }
     //Une fois les 1920 colonnes traitées, un seul mlx_put_image_to_window affiche le buffer entier d'un coup
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen->img, 0, 0);
 }     
