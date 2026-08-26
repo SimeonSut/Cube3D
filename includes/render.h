@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:12:57 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 21:13:03 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/26 15:17:59 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	map_d_render(t_data *data);
 void	texture_init(t_data *data);
 void	texture_mapping_x(t_data *data);
 void	texture_mapping_y_draw(t_data *data, int x, int y);
+int		mouse_rotate(int x, void *param);
 
 #endif

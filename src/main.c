@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 15:53:36 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 21:09:22 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/26 15:18:38 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int main(int ac, char **av)
     texture_init(data);
 	map_d_render(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0, (int (*)())(void *)key_config, data);
+	mlx_hook(data->mlx_win, 6, 1L<<6,(int (*)())(void *)mouse_rotate, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
