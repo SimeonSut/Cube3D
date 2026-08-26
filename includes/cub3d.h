@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 21:13:14 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/26 16:37:37 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <math.h>
 # include <mlx.h>
 
-# define FOV M_PI / 4
+# define FOV M_PI_4
 
 typedef struct s_texture
 {

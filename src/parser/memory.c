@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/26 15:16:56 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/26 17:29:34 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ t_data	*t_data_init(void)
 	new->mlx_win = NULL;
 	new->player = malloc(sizeof(t_player));
 	if (!new->player)
-	{
-		free(new);
-		return (NULL);
-	}
+		return (free(new), NULL);
 	new->map = t_map_init();
 	if (!new->map)
 		return (free_data(new), NULL);
@@ -118,15 +115,3 @@ int	minilibx_init(t_data *data)
 		&data->screen->line_length, &data->screen->endian);
 	return (0);
 }
-
-
-/*
-int    exit_game(t_data *data)
-{
-    free_all_img(data);
-    mlx_destroy_window(data->mlx, data->window);
-    mlx_destroy_display(data->mlx);
-    free(data->mlx);
-    free_all(data->map);
-    exit(0);
-}*/
