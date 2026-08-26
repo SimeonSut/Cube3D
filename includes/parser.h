@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:11 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 21:13:12 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/26 15:17:09 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int		is_valid(char *line, int mode);
 //MEMORY.C
 t_data	*t_data_init(void);
 void	free_data(t_data *data);
+int     minilibx_init(t_data *data);
 
 #endif
