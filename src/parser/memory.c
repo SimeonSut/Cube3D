@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/26 15:16:56 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/27 04:03:33 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_data	*t_data_init(void)
 	new->v_plane = malloc(sizeof(t_img));
 	new->screen = malloc(sizeof(t_img));
 	new->ray = malloc(sizeof(t_ray));
+	new->mmap = malloc(sizeof(t_minimap));
 	if (!new->screen)
 		return (free_data(new), NULL);
 	return (new);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_and_movements.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/26 15:15:27 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/27 03:43:28 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int key_config(int keycode, void *param)
 		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
 		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
 	}
-	map_d_render(data);
+	//map_d_render(data);
 	return (0);
 }
 

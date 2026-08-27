@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 21:14:41 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/27 04:12:06 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void    map_render(t_data *data)
 //fait tout le travail du raycasting pour une frame complète : 
 //elle transforme la position et l'orientation du joueur en une image 3D, 
 //colonne par colonne.
-void    map_d_render(t_data *data)
+int	map_d_render(t_data *data)
 {
 	int x;
 	int y;
@@ -281,4 +281,5 @@ void    map_d_render(t_data *data)
 	}
 	//Une fois les 1920 colonnes traitées, un seul mlx_put_image_to_window affiche le buffer entier d'un coup
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen->img, 0, 0);
+	return (0);
 }     

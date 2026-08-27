@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 21:13:14 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/27 04:33:04 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ typedef struct s_img
 	int     endian;
 }           t_img;
 
+typedef struct s_minimap
+{
+    t_img   *mm;
+    t_img   *mp;
+    t_img   *mw;
+}           t_minimap;
+
 typedef struct s_player
 {
 	//double (pas int — le joueur doit pouvoir être à une position fractionnaire dans une case,
@@ -114,6 +121,7 @@ typedef struct s_data
     t_ray       *ray;
     t_texture   texture[4];
     int         tex_index;
+    t_minimap   *mmap;
 }               t_data;
 
 # define MOV_SPEED 0.05
