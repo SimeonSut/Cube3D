@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 14:09:06 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/29 00:12:05 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static int	string_count(char **strs);
+int	string_count(char **strs);
 
 int flood_fill(char **map, int p_x, int p_y)
 {
@@ -85,7 +85,7 @@ int	is_valid(char *line, int mode)
 	return (1);
 }
 
-static int	string_count(char **strs)
+int	string_count(char **strs)
 {
 	int	i;
 
