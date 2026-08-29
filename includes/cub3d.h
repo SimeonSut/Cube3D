@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/27 04:33:04 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/29 01:55:56 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <mlx.h>
 
 # define FOV M_PI / 4
-
+# define W 1920
+# define H 1080
 typedef struct s_texture
 {
     void    *img;
@@ -71,6 +72,8 @@ typedef struct s_minimap
     t_img   *mm;
     t_img   *mp;
     t_img   *mw;
+    int     wrat;
+    int     hrat;
 }           t_minimap;
 
 typedef struct s_player

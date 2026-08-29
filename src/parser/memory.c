@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/27 04:03:33 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/29 02:40:40 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ t_data	*t_data_init(void)
 	new->screen = malloc(sizeof(t_img));
 	new->ray = malloc(sizeof(t_ray));
 	new->mmap = malloc(sizeof(t_minimap));
+	new->mmap->mm = malloc(sizeof(t_img));
+	new->mmap->mp = malloc(sizeof(t_img));
+	new->mmap->mw = malloc(sizeof(t_img));
 	if (!new->screen)
 		return (free_data(new), NULL);
 	return (new);

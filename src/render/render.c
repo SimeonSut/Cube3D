@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/27 04:12:06 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/29 02:19:13 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,5 +281,6 @@ int	map_d_render(t_data *data)
 	}
 	//Une fois les 1920 colonnes traitées, un seul mlx_put_image_to_window affiche le buffer entier d'un coup
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen->img, 0, 0);
+	minimap_draw(data);
 	return (0);
 }     

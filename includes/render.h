@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:12:57 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/27 03:41:53 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/29 03:13:32 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ void	texture_mapping_x(t_data *data);
 void	texture_mapping_y_draw(t_data *data, int x, int y);
 int		mouse_rotate(int x,int y, void *param);
 
+void    minimap_init(t_data *data);
+void	minimap_draw(t_data *data);
 #endif
