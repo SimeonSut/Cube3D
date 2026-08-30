@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/30 11:24:19 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/30 13:33:32 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	side_dist_calculation(t_data *data);
 static void	hit_determination(t_data *data);
 static void	column_drawing(t_data *data, int x);
+static void	draw_start_and_end(t_data *data);
 
 void    map_d_render(t_data *data)
 {
@@ -37,10 +38,7 @@ void    map_d_render(t_data *data)
 		else
 			data->ray->perp_wall_dist = data->ray->side_dist_y - data->ray->delta_dist_y;
 		data->ray->line_height = 1080 / data->ray->perp_wall_dist;
-		data->ray->draw_start = -data->ray->line_height / 2 + 1080 / 2;
-		data->ray->draw_end = data->ray->line_height / 2 + 1080 / 2;
-		if (data->ray->draw_start < 0) data->ray->draw_start = 0;
-		if (data->ray->draw_end >= 1080) data->ray->draw_end = 1080 - 1;
+		draw_start_and_end(data);
 		texture_mapping_x(data);
 		column_drawing(data, x);
 		x++;
@@ -111,4 +109,14 @@ static void	column_drawing(t_data *data, int x)
 			my_mlx_pixel_put(data->screen, x, y, data->map->color_c);
 		y++;
 	}
+}
+
+static void	draw_start_and_end(t_data *data)
+{
+	data->ray->draw_start = -data->ray->line_height / 2 + 1080 / 2;
+	data->ray->draw_end = data->ray->line_height / 2 + 1080 / 2;
+	if (data->ray->draw_start < 0)
+		data->ray->draw_start = 0;
+	if (data->ray->draw_end >= 1080)
+		data->ray->draw_end = 1080 - 1;
 }

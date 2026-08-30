@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 14:30:26 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/25 18:21:54 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/30 13:12:05 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,17 @@ static	int	texture_select(t_ray *ray)
 void	texture_mapping_y_draw(t_data *data, int x, int y)
 {
 	data->texture[data->tex_index].texture_y =
-		(int)data->texture[data->tex_index].texture_pos & (data->texture[data->tex_index].height - 1);
+		(int)data->texture[data->tex_index].texture_pos
+		& (data->texture[data->tex_index].height - 1);
 	data->texture[data->tex_index].pixel_color =
-		*(unsigned int *)(data->texture[data->tex_index].addr +
-			(data->texture[data->tex_index].texture_y * data->texture[data->tex_index].line_length +
-			data->texture[data->tex_index].texture_x * (data->texture[data->tex_index].bits_per_pixel / 8)));
+		*(unsigned int *)(data->texture[data->tex_index].addr
+			+ (data->texture[data->tex_index].texture_y
+			* data->texture[data->tex_index].line_length
+			+ data->texture[data->tex_index].texture_x
+			* (data->texture[data->tex_index].bits_per_pixel / 8)));
 	my_mlx_pixel_put(data->screen, x, y, data->texture[data->tex_index].pixel_color);
-	data->texture[data->tex_index].texture_pos += data->texture[data->tex_index].step;
+	data->texture[data->tex_index].texture_pos
+		+= data->texture[data->tex_index].step;
 }
 
 // charger les fichiers xpm

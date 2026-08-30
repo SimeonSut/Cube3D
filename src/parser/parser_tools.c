@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/29 00:12:05 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/30 12:25:27 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,26 @@ int	string_count(char **strs)
 	while (strs[i])
 		i++;
 	return (i);
+}
+
+int	minilibx_init(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+	{
+		ft_putstr_fd("mlx init failed\n", 2);
+		free_data(data);
+		return (1);
+	}
+	data->mlx_win = mlx_new_window(data->mlx, 1920, 1080, "TMP_TEST");
+	if (!data->mlx_win)
+	{
+		ft_putstr_fd("new window fail\n",2);
+		free_data(data);
+		return (1);
+	}
+	data->screen->img = mlx_new_image(data->mlx, 1920, 1080);
+	data->screen->addr = mlx_get_data_addr(data->screen->img, &data->screen->bits_per_pixel,
+		&data->screen->line_length, &data->screen->endian);
+	return (0);
 }
