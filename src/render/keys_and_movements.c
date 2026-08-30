@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/26 17:30:52 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/30 11:24:31 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int key_config(int keycode, void *param)
 		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
 		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
 	}
-	map_d_render(data);
+	//map_d_render(data);
 	return (0);
 }
 
