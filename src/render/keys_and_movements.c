@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/30 11:24:31 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/30 23:51:01 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,21 @@ static double	sidewalk(t_data *data, double r, int keycode, int axis)
 	else if (keycode == 'd' && axis == 'y')
 		m = (data->player->dir_x * sin(r * 3) - data->player->dir_y * cos(r * 3));
 	return (m);
+}
+
+int	key_handler(int key, t_data *data)
+{
+	if (data->mlx_win)
+	{
+		if (key == ESC)
+			mlx_loop_end(data->mlx_win);
+	}
+	return (0);
+}
+
+int	close_window(t_data *data)
+{
+	if (data->mlx_win)
+		mlx_loop_end(data->mlx_win);
+	return (0);
 }
