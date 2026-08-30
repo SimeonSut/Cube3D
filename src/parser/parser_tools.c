@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/30 12:25:27 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/30 20:38:19 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	minilibx_init(t_data *data)
 		free_data(data);
 		return (1);
 	}
-	data->mlx_win = mlx_new_window(data->mlx, 1920, 1080, "TMP_TEST");
+	data->mlx_win = mlx_new_window(data->mlx, W, H, "TMP_TEST");
 	if (!data->mlx_win)
 	{
 		ft_putstr_fd("new window fail\n",2);
