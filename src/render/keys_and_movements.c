@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_and_movements.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 17:08:05 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:00:29 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static void		movements(t_data *data, int keycode);
 static double	sidewalk(t_data *data, double r, int keycode, int axis);
+static int	collision(t_data *data, char key);
 static int		key_handler(int key, t_data *data);
 
 int key_config(int keycode, void *param)
@@ -65,21 +66,29 @@ static void	movements(t_data *data, int keycode)
 {
 	if (keycode == 'w')
 	{
+		if (collision(data, 'w'))
+			return ;
 		data->player->pos_x += MOV_SPEED * data->player->dir_x;
 		data->player->pos_y += MOV_SPEED * data->player->dir_y;
 	}
 	else if (keycode == 's')
 	{
+		if (collision(data, 's'))
+			return ;
 		data->player->pos_x -= MOV_SPEED * data->player->dir_x;
 		data->player->pos_y -= MOV_SPEED * data->player->dir_y;
 	}
 	else if (keycode == 'a')
 	{
+		if (collision(data, 'a'))
+			return ;
 		data->player->pos_x += MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'x');
 		data->player->pos_y += MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'y');
 	}
 	else if (keycode == 'd')
 	{
+		if (collision(data, 'd'))
+			return ;
 		data->player->pos_x += MOV_SPEED * sidewalk(data, M_2_PI, 'd', 'x');
 		data->player->pos_y += MOV_SPEED * sidewalk(data, M_2_PI, 'd', 'y');
 	}
@@ -99,6 +108,41 @@ static double	sidewalk(t_data *data, double r, int keycode, int axis)
 	else if (keycode == 'd' && axis == 'y')
 		m = (data->player->dir_x * sin(r * 3) - data->player->dir_y * cos(r * 3));
 	return (m);
+}
+
+static int	collision(t_data *data, char key)
+{
+	double	new_pos_x;
+	double	new_pos_y;
+	
+	new_pos_x = 0.0;
+	new_pos_y = 0.0;
+	if (key == 'w')
+	{
+		new_pos_x = data->player->pos_x + MOV_SPEED * data->player->dir_x;
+		new_pos_y = data->player->pos_y + MOV_SPEED * data->player->dir_y;
+	}
+	else if (key == 's')
+	{
+		new_pos_x = data->player->pos_x - MOV_SPEED * data->player->dir_x;
+		new_pos_y = data->player->pos_y - MOV_SPEED * data->player->dir_y;
+	}
+	else if (key == 'a')
+	{
+		new_pos_x = data->player->pos_x + MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'x');
+		new_pos_y = data->player->pos_y + MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'y');
+	}
+	else if (key == 'd')
+	{
+		new_pos_x = data->player->pos_x - MOV_SPEED * sidewalk(data, M_PI_2, 'd', 'x');
+		new_pos_y = data->player->pos_y - MOV_SPEED * sidewalk(data, M_PI_2, 'd', 'y');
+	}
+	if (data->map->map[(int)new_pos_y][(int)new_pos_x] == '1'
+			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == '\n'
+			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == ' '
+			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == 0)
+		return (1);
+	return (0);
 }
 
 static int	key_handler(int key, t_data *data)
