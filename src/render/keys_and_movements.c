@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 15:17:31 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:08:05 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static void		movements(t_data *data, int keycode);
 static double	sidewalk(t_data *data, double r, int keycode, int axis);
-static int		key_handler(int key, void *mlx);
+static int		key_handler(int key, t_data *data);
 
 int key_config(int keycode, void *param)
 {
@@ -43,14 +43,21 @@ int key_config(int keycode, void *param)
 		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
 		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
 	}
-	key_handler(keycode, data->mlx);
+	key_handler(keycode, data);
 	return (0);
 }
 
-int	close_window(void *mlx)
+int	close_window(void *param)
 {
-	if (mlx)
-		mlx_loop_end(mlx);
+	t_data *data;
+
+	data = param;
+	if (data->mlx)
+	{
+		mlx_loop_end(data->mlx);
+		free_data(data);
+		exit(1);
+	}
 	return (0);
 }
 
@@ -94,12 +101,13 @@ static double	sidewalk(t_data *data, double r, int keycode, int axis)
 	return (m);
 }
 
-static int	key_handler(int key, void *mlx)
+static int	key_handler(int key, t_data *data)
 {
-	if (mlx)
+	if (key == ESC && data->mlx)
 	{
-		if (key == ESC)
-			mlx_loop_end(mlx);
+		mlx_loop_end(data->mlx);
+		free_data(data);
+		exit(1);
 	}
 	return (0);
 }

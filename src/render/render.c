@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 15:24:59 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:05:03 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void    map_d_render(t_data *data)
 		data->ray->ray_dir_y = data->player->dir_y + data->player->plane_y * data->ray->camera_x;
 		data->ray->map_x = (int)data->player->pos_x;
 		data->ray->map_y = (int)data->player->pos_y;
-		data->ray->delta_dist_x = (data->ray->ray_dir_x == 0) ? 1e30 : fabs(1 / data->ray->ray_dir_x);
-		data->ray->delta_dist_y = (data->ray->ray_dir_y == 0) ? 1e30 : fabs(1 / data->ray->ray_dir_y);
+		delta_dist_calculation(data);
 		side_dist_calculation(data);
 		hit_determination(data);
 		if (data->ray->side == 0)

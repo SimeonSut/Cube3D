@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:12:57 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 15:16:13 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:06:31 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include "libft.h"
 
 int		key_config(int keycode, void *param);
-int		close_window(void *mlx);
+int		close_window(void *param);
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	delta_dist_calculation(t_data *data);
 void	draw_squar(void *img, int size, int color, int mode);
 void	map_render(t_data *data);
 void	map_d_render(t_data *data);

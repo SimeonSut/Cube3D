@@ -22,7 +22,7 @@ LIBFT = libft/libft.a
 
 INC = -I ./includes/ -Ilibft
 
-all:$(NAME)
+all: mlx $(NAME)
 
 $(NAME):$(OBJ) $(GNL) $(LIBFT)
 	$(CC) $(FLAGS) $^ -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
