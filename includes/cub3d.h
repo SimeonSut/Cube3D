@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 19:36:35 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 20:07:55 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define ESC 65307
 # define ROTATION_SPEED 0.00015
 # define MOV_SPEED 0.08
+# define XK_RIGHT 65363
+# define XK_LEFT 65361
 
 typedef struct s_texture
 {

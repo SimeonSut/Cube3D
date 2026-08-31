@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 19:22:46 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 20:08:04 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	key_config(int keycode, void *param)
 	old_plane_x = data->p->plx;
 	if (keycode == 'w' || keycode == 's' || keycode == 'a' || keycode == 'd')
 		movements(data, keycode);
-	else if (keycode == 'q')
+	else if (keycode == XK_LEFT)
 	{
 		data->p->dx = data->p->dx * cos(-0.03) - data->p->dy * sin(-0.03);
 		data->p->dy = old_dir_x * sin(-0.03) + data->p->dy * cos(-0.03);
 		data->p->plx = data->p->plx * cos(-0.03) - data->p->ply * sin(-0.03);
 		data->p->ply = old_plane_x * sin(-0.03) + data->p->ply * cos(-0.03);
 	}
-	else if (keycode == 'e')
+	else if (keycode == XK_RIGHT)
 	{
 		data->p->dx = data->p->dx * cos(0.03) - data->p->dy * sin(0.03);
 		data->p->dy = old_dir_x * sin(0.03) + data->p->dy * cos(0.03);
