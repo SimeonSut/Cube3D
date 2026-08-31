@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:11 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/29 00:19:50 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:16:45 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int		player_data_init(t_data *data);
 char	**dup_map(char **map);
 int		flood_fill(char **map_data, int p_x, int p_y);
 int		is_valid(char *line, int mode);
-int     string_count(char **strs);
+int		string_count(char **strs);
 
 //MEMORY.C
 t_data	*t_data_init(void);
 void	free_data(t_data *data);
-int     minilibx_init(t_data *data);
+int		minilibx_init(t_data *data);
 
 #endif

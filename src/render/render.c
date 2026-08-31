@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 17:15:00 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:53:14 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ static void	hit_determination(t_data *data);
 static void	column_drawing(t_data *data, int x);
 static void	draw_start_and_end(t_data *data);
 
-void    map_d_render(t_data *data)
+void	map_d_render(t_data *data)
 {
-	int x;
+	int	x;
+
+	x = -1;
 	ft_memset(data->screen->addr, 0, data->screen->line_length * H);
-	x = 0;
-	while (x < W)
+	while (++x < W)
 	{
 		data->ray->camera_x = 2.0 * x / W - 1;
 		data->ray->ray_dir_x = data->player->dir_x + data->player->plane_x * data->ray->camera_x;
@@ -40,7 +41,6 @@ void    map_d_render(t_data *data)
 		draw_start_and_end(data);
 		texture_mapping_x(data);
 		column_drawing(data, x);
-		x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen->img, 0, 0);
 	minimap_draw(data);

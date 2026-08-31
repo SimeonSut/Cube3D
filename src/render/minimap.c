@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 04:04:32 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/29 03:12:52 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:35:19 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 #include "parser.h"
 #include "render.h"
 
-static  int 	find_map_width(char **map);
-static	void	draw_m(t_img *image, int width, int height, int color);
+static int		find_map_width(char **map);
+static void		draw_m(t_img *image, int width, int height, int color);
 
-void    minimap_init(t_data *data)
-{	
+void	minimap_init(t_data *data)
+{
 	data->mmap->wrat = W / 5 / find_map_width(data->map->map);
 	data->mmap->hrat = H / 5 / string_count(data->map->map);
 	data->mmap->mm->img = mlx_new_image(data->mlx, (W / 5), (H / 5));
 	data->mmap->mp->img = mlx_new_image(data->mlx, data->mmap->wrat,
-		data->mmap->hrat);
+			data->mmap->hrat);
 	data->mmap->mw->img = mlx_new_image(data->mlx, data->mmap->wrat,
-		data->mmap->hrat);
+			data->mmap->hrat);
 	data->mmap->mm->addr = mlx_get_data_addr(data->mmap->mm->img,
-		&data->mmap->mm->bits_per_pixel, &data->mmap->mm->line_length,
-		&data->mmap->mm->endian);
+			&data->mmap->mm->bits_per_pixel, &data->mmap->mm->line_length,
+			&data->mmap->mm->endian);
 	data->mmap->mp->addr = mlx_get_data_addr(data->mmap->mp->img,
-		&data->mmap->mp->bits_per_pixel, &data->mmap->mp->line_length,
-		&data->mmap->mp->endian);
+			&data->mmap->mp->bits_per_pixel, &data->mmap->mp->line_length,
+			&data->mmap->mp->endian);
 	data->mmap->mw->addr = mlx_get_data_addr(data->mmap->mw->img,
-		&data->mmap->mw->bits_per_pixel, &data->mmap->mw->line_length,
-		&data->mmap->mw->endian);
+			&data->mmap->mw->bits_per_pixel, &data->mmap->mw->line_length,
+			&data->mmap->mw->endian);
 	draw_m(data->mmap->mp, data->mmap->wrat, data->mmap->hrat, 0xFFFF0000);
 	draw_m(data->mmap->mw, data->mmap->wrat, data->mmap->hrat, 0x13031990);
 }
@@ -69,7 +69,7 @@ static	void	draw_m(t_img *image, int width, int height, int color)
 {
 	int	y;
 	int	x;
-	
+
 	y = 0;
 	while (y < height)
 	{
@@ -83,7 +83,7 @@ static	void	draw_m(t_img *image, int width, int height, int color)
 	}
 }
 
-static  int find_map_width(char **map)
+static int	find_map_width(char **map)
 {
 	int	biggest;
 	int	len;
@@ -100,4 +100,3 @@ static  int find_map_width(char **map)
 	}
 	return (biggest);
 }
-

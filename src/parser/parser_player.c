@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:22 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/26 17:28:04 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:27:16 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,10 @@ int	player_data_init(t_data *data)
 	return (0);
 }
 
-
-//Le +0.5 évite que le joueur démarre collé à un 
-//mur ou pile sur une frontière de case (ce qui peut 
-//casser tes calculs de collision dès le premier frame).
-//D'où vient la valeur 0.66
-//La longueur (norme) du vecteur plane détermine l'ouverture du FOV,
-//pas juste sa direction. Plus plane est long par rapport à dir
-//(qui est toujours de norme 1 ici), plus l'angle entre le rayon du
-//bord gauche et celui du bord droit est grand.
 static void	t_player_init(t_player *player, int x, int y, char *dir)
 {
 	if (*dir == 'N' || *dir == 'S' || *dir == 'W' || *dir == 'E')
-	{	
+	{
 		player->player_nb += 1;
 		player->pos_x = (double)x + 0.5;
 		player->pos_y = (double)y + 0.5;
@@ -67,48 +58,48 @@ static void	t_player_init(t_player *player, int x, int y, char *dir)
 
 static void	direction_init(t_player *player, char *dir)
 {
-		if (*dir == 'N')
-		{
-			player->dir_x = 0;
-			player->dir_y = -1;
-		}
-		else if (*dir == 'S')
-		{
-			player->dir_x = 0;
-			player->dir_y = 1;
-		}
-		else if (*dir == 'W')
-		{
-			player->dir_x = -1;
-			player->dir_y = 0;
-		}
-		else if (*dir == 'E')
-		{
-			player->dir_x = 1;
-			player->dir_y = 0;
-		}
+	if (*dir == 'N')
+	{
+		player->dir_x = 0;
+		player->dir_y = -1;
+	}
+	else if (*dir == 'S')
+	{
+		player->dir_x = 0;
+		player->dir_y = 1;
+	}
+	else if (*dir == 'W')
+	{
+		player->dir_x = -1;
+		player->dir_y = 0;
+	}
+	else if (*dir == 'E')
+	{
+		player->dir_x = 1;
+		player->dir_y = 0;
+	}
 }
 
 static void	plane_init(t_player *player, char *dir)
 {
-		if (*dir == 'N')
-		{
-			player->plane_x = tan(FOV / 2.0);
-			player->plane_y = 0;
-		}
-		else if (*dir == 'S')
-		{
-			player->plane_x = -1;
-			player->plane_y = 0;
-		}
-		else if (*dir == 'W')
-		{
-			player->plane_x = 0;
-			player->plane_y = -1;
-		}
-		else if (*dir == 'E')
-		{
-			player->plane_x = 0;
-			player->plane_y = tan(FOV / 2.0);
-		}
+	if (*dir == 'N')
+	{
+		player->plane_x = tan(FOV / 2.0);
+		player->plane_y = 0;
+	}
+	else if (*dir == 'S')
+	{
+		player->plane_x = -1;
+		player->plane_y = 0;
+	}
+	else if (*dir == 'W')
+	{
+		player->plane_x = 0;
+		player->plane_y = -1;
+	}
+	else if (*dir == 'E')
+	{
+		player->plane_x = 0;
+		player->plane_y = tan(FOV / 2.0);
+	}
 }

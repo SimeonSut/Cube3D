@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 16:52:23 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:24:48 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	**map_info_parser(char *map_path);
 static char	**parser_construct(int fd);
 static int	map_data_init(t_data *data, char **map_info);
 
-int			parsing(t_data *data, char **av)
+int	parsing(t_data *data, char **av)
 {
 	char	**map_info;
 
@@ -102,7 +102,8 @@ static int	map_data_init(t_data *data, char **map_info)
 			return (1);
 		if (map_info[i][0] != '\n' && is_valid(map_info[i], 0) != 0)
 		{
-			data->map->map = realloc(data->map->map, sizeof(char *) * (2 + map_counter));
+			data->map->map = realloc(data->map->map, sizeof(char *)
+					* (2 + map_counter));
 			if (!data->map->map)
 				return (1);
 			data->map->map[map_counter] = ft_strdup(map_info[i]);

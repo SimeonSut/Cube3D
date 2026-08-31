@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 17:19:14 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:30:56 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_map	*t_map_init(void)
 	return (new);
 }
 
-static int img_mem_init(t_data *new)
+static int	img_mem_init(t_data *new)
 {
 	new->screen = malloc(sizeof(t_img));
 	new->ray = malloc(sizeof(t_ray));

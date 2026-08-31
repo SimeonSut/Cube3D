@@ -6,14 +6,14 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 12:37:03 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 17:20:02 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:32:31 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 static void	free_t_map(t_map *map_data);
-static void free_img_mem(t_data *data);
+static void	free_img_mem(t_data *data);
 
 void	free_data(t_data *data)
 {
@@ -52,7 +52,7 @@ static void	free_t_map(t_map *map_data)
 	free(map_data);
 }
 
-static void free_img_mem(t_data *data)
+static void	free_img_mem(t_data *data)
 {
 	if (data->screen)
 		free(data->screen);

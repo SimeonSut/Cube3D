@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/26 16:34:33 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:25:19 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	directions_texture_init(t_data *data, char **tmps)
 
 static int	floor_ceil_init(t_data *data, char **tmps)
 {
-	char **rgb;
+	char	**rgb;
 
 	rgb = ft_split(tmps[1], ',');
 	if (!rgb)
@@ -98,7 +98,7 @@ static int	create_rgb(char *red, char *green, char *blue)
 
 static void	termination(char *str)
 {
-	char *t;
+	char	*t;
 
 	t = ft_strchr(str, '\n');
 	*t = '\0';

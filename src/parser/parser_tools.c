@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 15:24:11 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:29:18 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	string_count(char **strs);
 
-int flood_fill(char **map, int p_x, int p_y)
+int	flood_fill(char **map, int p_x, int p_y)
 {
 	int		height;
 	int		widgth;
@@ -109,12 +109,13 @@ int	minilibx_init(t_data *data)
 	data->mlx_win = mlx_new_window(data->mlx, W, H, "TMP_TEST");
 	if (!data->mlx_win)
 	{
-		ft_putstr_fd("new window fail\n",2);
+		ft_putstr_fd("new window fail\n", 2);
 		free_data(data);
 		return (1);
 	}
 	data->screen->img = mlx_new_image(data->mlx, W, H);
-	data->screen->addr = mlx_get_data_addr(data->screen->img, &data->screen->bits_per_pixel,
-		&data->screen->line_length, &data->screen->endian);
+	data->screen->addr = mlx_get_data_addr(data->screen->img,
+			&data->screen->bits_per_pixel,
+			&data->screen->line_length, &data->screen->endian);
 	return (0);
 }
