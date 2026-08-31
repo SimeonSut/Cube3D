@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:01:29 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/31 18:14:02 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:19:02 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 int	mouse_rotate(int x, int y, void *param)
 {
-	t_data *data;
+	t_data	*data;
 	double	old_dir_x;
-	double 	old_plane_x;
+	double	old_plane_x;
 	double	rot_speed;
 	int		diff_x;
-	
+
 	diff_x = x - W / 2;
 	rot_speed = 0.000015;
 	data = param;
