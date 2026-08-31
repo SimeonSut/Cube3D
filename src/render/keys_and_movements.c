@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:14:25 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:16:15 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,16 @@ static int	collision(t_data *data, char key)
 			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == ' '
 			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == 0)
 		return (1);
+	return (0);
+}
+
+static int	key_handler(int key, t_data *data)
+{
+	if (key == ESC && data->mlx)
+	{
+		mlx_loop_end(data->mlx);
+		free_data(data);
+		exit(1);
+	}
 	return (0);
 }
