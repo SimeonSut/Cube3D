@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 17:05:03 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:15:00 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void    map_d_render(t_data *data)
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen->img, 0, 0);
+	minimap_draw(data);
 }
 
 static void	side_dist_calculation(t_data *data)

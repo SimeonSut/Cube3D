@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 12:37:03 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 16:49:42 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:20:02 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	if (data->mlx && data->img && data->screen)
+	if (data->mlx && data->screen)
 		mlx_destroy_image(data->mlx, data->screen->img);
 	if (data->mlx && data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
@@ -54,16 +54,6 @@ static void	free_t_map(t_map *map_data)
 
 static void free_img_mem(t_data *data)
 {
-	if (data->img)
-		free(data->img);
-	if (data->img_p)
-		free(data->img_p);
-	if (data->grill)
-		free(data->grill);
-	if (data->v_dir)
-		free(data->v_dir);
-	if (data->v_plane)
-		free(data->v_plane);
 	if (data->screen)
 		free(data->screen);
 	if (data->ray)

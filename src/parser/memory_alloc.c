@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/30 12:54:22 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:19:14 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,6 @@ static t_map	*t_map_init(void)
 
 static int img_mem_init(t_data *new)
 {
-	new->img = malloc(sizeof(t_img));
-	new->img_p = malloc(sizeof(t_img));
-	if (!new->img || !new->img_p)
-		return (1);
-	new->grill = malloc(sizeof(t_img));
-	if (!new->grill)
-		return (1);
-	new->v_dir = malloc(sizeof(t_img));
-	new->v_plane = malloc(sizeof(t_img));
-	if (!new->v_dir || !new->v_plane)
-		return (1);
 	new->screen = malloc(sizeof(t_img));
 	new->ray = malloc(sizeof(t_ray));
 	if (!new->screen || !new->ray)

@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 17:01:57 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:17:43 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,6 @@ typedef struct s_data
     void        *mlx_win;
     t_player    *player;
     t_map       *map;
-    t_img       *img;
-    t_img       *img_p;
-    t_img       *grill;
-    t_img       *v_dir;
-    t_img       *v_plane;
     t_img       *screen;
     t_ray       *ray;
     t_texture   texture[4];
