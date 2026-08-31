@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:01:29 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/27 03:53:02 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 12:24:13 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	mouse_rotate(int x, int y, void *param)
 	int		diff_x;
 	
 	diff_x = x - 1920 / 2;
-	rot_speed = 0.000015;
+	rot_speed = 0.003;
 	data = param;
 	old_dir_x = data->player->dir_x;
 	old_plane_x = data->player->plane_x;
