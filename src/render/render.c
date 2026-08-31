@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:53:14 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 19:47:30 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	map_d_render(t_data *data)
 	while (++x < W)
 	{
 		data->ray->camera_x = 2.0 * x / W - 1;
-		data->ray->ray_dir_x = data->player->dir_x + data->player->plane_x * data->ray->camera_x;
-		data->ray->ray_dir_y = data->player->dir_y + data->player->plane_y * data->ray->camera_x;
-		data->ray->map_x = (int)data->player->pos_x;
-		data->ray->map_y = (int)data->player->pos_y;
+		data->ray->rdx = data->p->dx + data->p->plx * data->ray->camera_x;
+		data->ray->rdy = data->p->dy + data->p->ply * data->ray->camera_x;
+		data->ray->map_x = (int)data->p->pos_x;
+		data->ray->map_y = (int)data->p->pos_y;
 		delta_dist_calculation(data);
 		side_dist_calculation(data);
 		hit_determination(data);
 		if (data->ray->side == 0)
-			data->ray->perp_wall_dist = data->ray->side_dist_x - data->ray->delta_dist_x;
+			data->ray->perp_wall_dist = data->ray->side_dist_x - data->ray->ddx;
 		else
-			data->ray->perp_wall_dist = data->ray->side_dist_y - data->ray->delta_dist_y;
+			data->ray->perp_wall_dist = data->ray->side_dist_y - data->ray->ddy;
 		data->ray->line_height = H / data->ray->perp_wall_dist;
 		draw_start_and_end(data);
 		texture_mapping_x(data);
@@ -48,25 +48,29 @@ void	map_d_render(t_data *data)
 
 static void	side_dist_calculation(t_data *data)
 {
-	if (data->ray->ray_dir_x < 0)
+	if (data->ray->rdx < 0)
 	{
 		data->ray->step_x = -1;
-		data->ray->side_dist_x = (data->player->pos_x - (double)data->ray->map_x) * data->ray->delta_dist_x;
+		data->ray->side_dist_x = (data->p->pos_x
+				- (double)data->ray->map_x) * data->ray->ddx;
 	}
 	else
 	{
 		data->ray->step_x = 1;
-		data->ray->side_dist_x = ((double)data->ray->map_x + 1.0 - data->player->pos_x) * data->ray->delta_dist_x;
+		data->ray->side_dist_x = ((double)data->ray->map_x + 1.0
+				- data->p->pos_x) * data->ray->ddx;
 	}
-	if (data->ray->ray_dir_y < 0)
+	if (data->ray->rdy < 0)
 	{
 		data->ray->step_y = -1;
-		data->ray->side_dist_y = (data->player->pos_y - (double)data->ray->map_y) * data->ray->delta_dist_y;
+		data->ray->side_dist_y = (data->p->pos_y
+				- (double)data->ray->map_y) * data->ray->ddy;
 	}
 	else
 	{
 		data->ray->step_y = 1;
-		data->ray->side_dist_y = ((double)data->ray->map_y + 1.0 - data->player->pos_y) * data->ray->delta_dist_y;
+		data->ray->side_dist_y = ((double)data->ray->map_y
+				+ 1.0 - data->p->pos_y) * data->ray->ddy;
 	}
 }
 
@@ -77,13 +81,13 @@ static void	hit_determination(t_data *data)
 	{
 		if (data->ray->side_dist_x < data->ray->side_dist_y)
 		{
-			data->ray->side_dist_x += data->ray->delta_dist_x;
+			data->ray->side_dist_x += data->ray->ddx;
 			data->ray->map_x += data->ray->step_x;
 			data->ray->side = 0;
 		}
 		else
 		{
-			data->ray->side_dist_y += data->ray->delta_dist_y;
+			data->ray->side_dist_y += data->ray->ddy;
 			data->ray->map_y += data->ray->step_y;
 			data->ray->side = 1;
 		}
@@ -104,9 +108,9 @@ static void	column_drawing(t_data *data, int x)
 			texture_mapping_y_draw(data, x, y);
 		}
 		else if (y < (H / 2))
-			my_mlx_pixel_put(data->screen, x, y, data->map->color_f);
-		else
 			my_mlx_pixel_put(data->screen, x, y, data->map->color_c);
+		else
+			my_mlx_pixel_put(data->screen, x, y, data->map->color_f);
 		y++;
 	}
 }

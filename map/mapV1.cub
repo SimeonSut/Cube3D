@@ -1,10 +1,10 @@
-NO sprites/redbrick.xpm
-SO sprites/purplestone.xpm
+NO sprites/colorstone.xpm
+SO sprites/bluestone.xpm
 WE sprites/wood.xpm
 EA sprites/greystone.xpm
 
-F 220,100,0
-C 225,30,0
+F 160,160,160
+C 51,153,255
 
  11111111111111111111111
 1000000000110000000000001

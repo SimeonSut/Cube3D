@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:30:56 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 19:03:17 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_data	*t_data_init(void)
 		return (NULL);
 	new->mlx = NULL;
 	new->mlx_win = NULL;
-	new->player = malloc(sizeof(t_player));
-	if (!new->player)
+	new->p = malloc(sizeof(t_player));
+	if (!new->p)
 		return (free(new), NULL);
 	new->map = t_map_init();
 	if (!new->map)

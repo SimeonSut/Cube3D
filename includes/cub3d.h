@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:20:27 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 19:36:35 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define W 1920
 # define H 1080
 # define ESC 65307
+# define ROTATION_SPEED 0.00015
+# define MOV_SPEED 0.08
 
 typedef struct s_texture
 {
@@ -41,12 +43,12 @@ typedef struct s_texture
 typedef struct s_ray
 {
 	double	camera_x;
-	double	ray_dir_x;
-	double	ray_dir_y;
+	double	rdx;
+	double	rdy;
 	int		map_x;
 	int		map_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
+	double	ddx;
+	double	ddy;
 	double	side_dist_x;
 	double	side_dist_y;
 	int		step_x;
@@ -82,10 +84,10 @@ typedef struct s_player
 {
 	double	pos_x;
 	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
+	double	dx;
+	double	dy;
+	double	plx;
+	double	ply;
 	int		player_nb;
 }			t_player;
 
@@ -106,7 +108,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_player	*player;
+	t_player	*p;
 	t_map		*map;
 	t_img		*screen;
 	t_ray		*ray;
@@ -114,7 +116,5 @@ typedef struct s_data
 	int			tex_index;
 	t_minimap	*mmap;
 }				t_data;
-
-# define MOV_SPEED 0.05
 
 #endif

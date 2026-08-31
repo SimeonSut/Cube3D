@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 04:04:32 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/31 18:35:19 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 19:06:13 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	minimap_draw(t_data *data)
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win,
-		data->mmap->mp->img, (int)data->player->pos_x * data->mmap->wrat,
-		(int)data->player->pos_y * data->mmap->hrat);
+		data->mmap->mp->img, (int)data->p->pos_x * data->mmap->wrat,
+		(int)data->p->pos_y * data->mmap->hrat);
 }
 
 static	void	draw_m(t_img *image, int width, int height, int color)

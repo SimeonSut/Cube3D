@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:24:48 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 19:03:34 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	parsing(t_data *data, char **av)
 		ft_putstr_fd("Player init error\n", 2);
 		return (free_data(data), 1);
 	}
-	if (flood_fill(map_info, data->player->pos_x, data->player->pos_y) == 1)
+	if (flood_fill(map_info, data->p->pos_x, data->p->pos_y) == 1)
 	{
 		ft_putstr_fd("Map invalid: Player is not surround by wall !\n", 2);
 		return (free_data(data), free_all(map_info), 1);

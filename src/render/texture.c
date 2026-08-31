@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 14:30:26 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/31 18:49:36 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 19:12:15 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	texture_mapping_x(t_data *data)
 {
 	data->tex_index = texture_select(data->ray);
 	if (data->ray->side == 0)
-		data->ray->wall_x = data->player->pos_y + data->ray->perp_wall_dist
-			* data->ray->ray_dir_y;
+		data->ray->wall_x = data->p->pos_y + data->ray->perp_wall_dist
+			* data->ray->rdy;
 	else
-		data->ray->wall_x = data->player->pos_x + data->ray->perp_wall_dist
-			* data->ray->ray_dir_x;
+		data->ray->wall_x = data->p->pos_x + data->ray->perp_wall_dist
+			* data->ray->rdx;
 	data->ray->wall_x -= floor(data->ray->wall_x);
 	data->texture[data->tex_index].texture_x
 		= (int)(data->ray->wall_x * data->texture[data->tex_index].width);
@@ -38,14 +38,14 @@ static int	texture_select(t_ray *ray)
 {
 	if (ray->side == 0)
 	{
-		if (ray->ray_dir_x < 0)
+		if (ray->rdx < 0)
 			return (2);
 		else
 			return (3);
 	}
 	else
 	{
-		if (ray->ray_dir_y < 0)
+		if (ray->rdy < 0)
 			return (0);
 		else
 			return (1);
