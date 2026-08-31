@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/30 23:44:35 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 15:22:46 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <mlx.h>
 
 # define FOV M_PI / 4
-# define W 1440
-# define H 810
+# define W 3840
+# define H 2160
 # define ESC 65307
 typedef struct s_texture
 {

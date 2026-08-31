@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_rotate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:01:29 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/27 03:53:02 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 15:23:37 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	mouse_rotate(int x, int y, void *param)
 	double	rot_speed;
 	int		diff_x;
 	
-	diff_x = x - 1920 / 2;
+	diff_x = x - W / 2;
 	rot_speed = 0.000015;
 	data = param;
 	old_dir_x = data->player->dir_x;
@@ -35,7 +35,7 @@ int	mouse_rotate(int x, int y, void *param)
 		- data->player->plane_y * sin(rot_speed * diff_x);
 	data->player->plane_y = old_plane_x * sin(rot_speed * diff_x)
 		+ data->player->plane_y * cos(rot_speed * diff_x);
-	mlx_mouse_move(data->mlx, data->mlx_win, 1920 / 2, 1080 / 2);
+	mlx_mouse_move(data->mlx, data->mlx_win, W / 2, H / 2);
 	(void)y;
 	return (0);
 }

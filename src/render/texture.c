@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 14:30:26 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/30 13:12:05 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/08/31 15:25:44 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	texture_mapping_x(t_data *data)
 		(int)(data->ray->wall_x * data->texture[data->tex_index].width);
 	data->texture[data->tex_index].step =
 		(double)data->texture[data->tex_index].height / data->ray->line_height;
-	data->texture[data->tex_index].texture_pos = (data->ray->draw_start - 1080 /
+	data->texture[data->tex_index].texture_pos = (data->ray->draw_start - H /
 		2 + data->ray->line_height / 2) * data->texture[data->tex_index].step;
 }
 

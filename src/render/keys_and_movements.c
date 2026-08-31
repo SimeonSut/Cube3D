@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_and_movements.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sutar <sutar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 15:38:04 by sutar            ###   ########.fr       */
+/*   Updated: 2026/08/31 15:17:31 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static void		movements(t_data *data, int keycode);
 static double	sidewalk(t_data *data, double r, int keycode, int axis);
+static int		key_handler(int key, void *mlx);
 
 int key_config(int keycode, void *param)
 {
@@ -42,7 +43,14 @@ int key_config(int keycode, void *param)
 		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
 		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
 	}
-	//map_d_render(data);
+	key_handler(keycode, data->mlx);
+	return (0);
+}
+
+int	close_window(void *mlx)
+{
+	if (mlx)
+		mlx_loop_end(mlx);
 	return (0);
 }
 
@@ -86,19 +94,12 @@ static double	sidewalk(t_data *data, double r, int keycode, int axis)
 	return (m);
 }
 
-int	key_handler(int key, void *mlx)
+static int	key_handler(int key, void *mlx)
 {
 	if (mlx)
 	{
 		if (key == ESC)
 			mlx_loop_end(mlx);
 	}
-	return (0);
-}
-
-int	close_window(void *mlx)
-{
-	if (mlx)
-		mlx_loop_end(mlx);
 	return (0);
 }
