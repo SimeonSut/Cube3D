@@ -5,8 +5,8 @@ FLAGS = -Werror -Wall -Wextra -g
 PARSER_PATH = src/parser/
 RENDER_PATH = src/render/
 
-SRC_PARSER = parser.c parser_tools.c parser_map.c parser_player.c memory.c
-SRC_RENDER = render.c texture.c keys_and_movements.c mouse_rotate.c minimap.c
+SRC_PARSER = parser.c parser_tools.c parser_map.c parser_player.c memory_alloc.c memory_free.c
+SRC_RENDER = render.c render_utils.c texture.c keys_and_movements.c mouse_rotate.c minimap.c
 
 SRCS = 	src/main.c \
 		$(addprefix $(PARSER_PATH), $(SRC_PARSER)) \
@@ -22,7 +22,7 @@ LIBFT = libft/libft.a
 
 INC = -I ./includes/ -Ilibft
 
-all:$(NAME)
+all: mlx $(NAME)
 
 $(NAME):$(OBJ) $(GNL) $(LIBFT)
 	$(CC) $(FLAGS) $^ -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)

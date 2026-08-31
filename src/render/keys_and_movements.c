@@ -6,7 +6,7 @@
 /*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 13:49:47 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 18:14:25 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,21 @@ int key_config(int keycode, void *param)
 		data->player->plane_x = data->player->plane_x * cos(0.03) - data->player->plane_y * sin(0.03);
 		data->player->plane_y = old_plane_x * sin(0.03) + data->player->plane_y * cos(0.03);
 	}
-	//map_d_render(data);
+	key_handler(keycode, data);
+	return (0);
+}
+
+int	close_window(void *param)
+{
+	t_data *data;
+
+	data = param;
+	if (data->mlx)
+	{
+		mlx_loop_end(data->mlx);
+		free_data(data);
+		exit(1);
+	}
 	return (0);
 }
 

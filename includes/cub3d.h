@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/29 01:55:56 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/31 17:17:43 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define FOV M_PI / 4
 # define W 1920
 # define H 1080
+# define ESC 65307
+
 typedef struct s_texture
 {
     void    *img;
@@ -115,11 +117,6 @@ typedef struct s_data
     void        *mlx_win;
     t_player    *player;
     t_map       *map;
-    t_img       *img;
-    t_img       *img_p;
-    t_img       *grill;
-    t_img       *v_dir;
-    t_img       *v_plane;
     t_img       *screen;
     t_ray       *ray;
     t_texture   texture[4];
@@ -130,3 +127,4 @@ typedef struct s_data
 # define MOV_SPEED 0.05
 
 #endif
+ 

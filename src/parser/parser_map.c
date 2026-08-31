@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/25 18:37:27 by csamakka         ###   ########.fr       */
+/*   Updated: 2026/08/26 16:34:33 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	directions_texture_init(t_data *data, char **tmps);
 static int	floor_ceil_init(t_data *data, char **tmps);
 static int	create_rgb(char *red, char *green, char *blue);
+static void	termination(char *str);
 
 int	direction_and_color_init(t_data *data, char *map_info)
 {
@@ -27,30 +28,20 @@ int	direction_and_color_init(t_data *data, char *map_info)
 		return (1);
 	if (is_valid(map_info, 1) == 0)
 	{
+		termination(tmps[1]);
 		if (directions_texture_init(data, tmps) == 1)
-		{
-			free_all(tmps);
-			return (1);
-		}
+			return (free_all(tmps), 1);
 	}
 	else if (is_valid(map_info, 2) == 0)
 	{
 		if (floor_ceil_init(data, tmps) != 0)
-		{
-			free_all(tmps);
-			return (1);
-		}
+			return (free_all(tmps), 1);
 	}
-	free_all(tmps);
-	return (0);
+	return (free_all(tmps), 0);
 }
 
 static int	directions_texture_init(t_data *data, char **tmps)
 {
-	char *t;
-
-	t = ft_strchr(tmps[1], '\n');
-	*t = '\0';
 	if (ft_strncmp(tmps[0], "NO", 2) == 0 && tmps[1])
 	{
 		data->map->texture_no = ft_strdup(tmps[1]);
@@ -103,4 +94,12 @@ static int	create_rgb(char *red, char *green, char *blue)
 	g = ft_atoi(green);
 	b = ft_atoi(blue);
 	return (r << 16 | g << 8 | b);
+}
+
+static void	termination(char *str)
+{
+	char *t;
+
+	t = ft_strchr(str, '\n');
+	*t = '\0';
 }
