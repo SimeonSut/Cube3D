@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:11 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:16:45 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 18:33:57 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		is_valid(char *line, int mode);
 int		string_count(char **strs);
 
 //MEMORY.C
-t_data	*t_data_init(void);
+void	t_data_init(t_data *new);
 void	free_data(t_data *data);
 int		minilibx_init(t_data *data);
 

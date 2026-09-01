@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:22 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 17:01:00 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:08:50 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	player_data_init(t_data *data)
 	int	i;
 	int	j;
 
-	if (!data->map->map)
+	if (!data->map.map)
 		return (1);
 	data->p.player_nb = 0;
 	i = 0;
-	while (data->map->map[i])
+	while (data->map.map[i])
 	{
 		j = 0;
-		while (data->map->map[i][j])
+		while (data->map.map[i][j])
 		{
-			if (t_player_init(&data->p, j, i, &data->map->map[i][j]) == 1)
+			if (t_player_init(&data->p, j, i, &data->map.map[i][j]) == 1)
 				return (1);
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 16:24:47 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:08:50 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,26 @@ static int	directions_texture_init(t_data *data, char **tmps)
 {
 	if (ft_strncmp(tmps[0], "NO", 2) == 0 && tmps[1])
 	{
-		data->map->texture_no = ft_strdup(tmps[1]);
-		if (!data->map->texture_no)
+		data->map.texture_no = ft_strdup(tmps[1]);
+		if (!data->map.texture_no)
 			return (1);
 	}
 	else if (ft_strncmp(tmps[0], "SO", 2) == 0 && tmps[1])
 	{
-		data->map->texture_so = ft_strdup(tmps[1]);
-		if (!data->map->texture_so)
+		data->map.texture_so = ft_strdup(tmps[1]);
+		if (!data->map.texture_so)
 			return (1);
 	}
 	else if (ft_strncmp(tmps[0], "WE", 2) == 0 && tmps[1])
 	{
-		data->map->texture_we = ft_strdup(tmps[1]);
-		if (!data->map->texture_we)
+		data->map.texture_we = ft_strdup(tmps[1]);
+		if (!data->map.texture_we)
 			return (1);
 	}
 	else if (ft_strncmp(tmps[0], "EA", 2) == 0 && tmps[1])
 	{
-		data->map->texture_ea = ft_strdup(tmps[1]);
-		if (!data->map->texture_ea)
+		data->map.texture_ea = ft_strdup(tmps[1]);
+		if (!data->map.texture_ea)
 			return (1);
 	}
 	return (0);
@@ -77,9 +77,9 @@ static int	floor_ceil_init(t_data *data, char **tmps)
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 		return (1);
 	if (ft_strncmp(tmps[0], "F", 2) == 0 && tmps[1])
-		data->map->color_f = create_rgb(rgb[0], rgb[1], rgb[2]);
+		data->map.color_f = create_rgb(rgb[0], rgb[1], rgb[2]);
 	else if (ft_strncmp(tmps[0], "C", 2) == 0 && tmps[1])
-		data->map->color_c = create_rgb(rgb[0], rgb[1], rgb[2]);
+		data->map.color_c = create_rgb(rgb[0], rgb[1], rgb[2]);
 	free_all(rgb);
 	return (0);
 }

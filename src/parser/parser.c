@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:09:45 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parsing(t_data *data, char **av)
 		ft_putstr_fd("Player init error\n", 2);
 		return (free_data(data), 1);
 	}
-	if (flood_fill(data->map->map, data->p.pos_x, data->p.pos_y) == 1)
+	if (flood_fill(data->map.map, data->p.pos_x, data->p.pos_y) == 1)
 	{
 		ft_putstr_fd("Map invalid: Player is not surround by wall !\n", 2);
 		return (free_data(data), free_all(map_info), 1);
@@ -97,7 +97,7 @@ static int	map_data_init(t_data *data, char **map_info)
 	int	i;
 	int	map_counter;
 
-	data->map->map = NULL;
+	data->map.map = NULL;
 	map_counter = 0;
 	i = -1;
 	while (map_info[++i])
@@ -106,12 +106,12 @@ static int	map_data_init(t_data *data, char **map_info)
 			return (1);
 		if (map_info[i][0] != '\n' && is_valid(map_info[i], 0) != 0)
 		{
-			data->map->map = realloc(data->map->map, sizeof(char *)
+			data->map.map = realloc(data->map.map, sizeof(char *)
 					* (2 + map_counter));
-			if (!data->map->map)
+			if (!data->map.map)
 				return (1);
-			data->map->map[map_counter] = ft_strdup(map_info[i]);
-			data->map->map[map_counter++ + 1] = NULL;
+			data->map.map[map_counter] = ft_strdup(map_info[i]);
+			data->map.map[map_counter++ + 1] = NULL;
 		}
 	}
 	return (0);
@@ -122,24 +122,19 @@ static int	check_validity(t_data *data)
 	int	result;
 
 	result = 0;
-	if (data->map)
-	{
-		if (!data->map->map)
-			result = 1;
-		if (!data->map->texture_no)
-			result = 1;
-		if (!data->map->texture_so)
-			result = 1;
-		if (!data->map->texture_ea)
-			result = 1;
-		if (!data->map->texture_we)
-			result = 1;
-		if (!data->map->color_f)
-			result = 1;
-		if (!data->map->color_c)
-			result = 1;
-	}
-	else
+	if (!data->map.map)
+		result = 1;
+	if (!data->map.texture_no)
+		result = 1;
+	if (!data->map.texture_so)
+		result = 1;
+	if (!data->map.texture_ea)
+		result = 1;
+	if (!data->map.texture_we)
+		result = 1;
+	if (!data->map.color_f)
+		result = 1;
+	if (!data->map.color_c)
 		result = 1;
 	if (result == 1)
 		ft_putstr_fd("wrong map specifications entry\n", STDERR_FILENO);

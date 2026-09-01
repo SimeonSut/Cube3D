@@ -6,60 +6,27 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 21:13:54 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 17:01:09 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 18:40:38 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static t_map	*t_map_init(void);
-static int		img_mem_init(t_data *new);
-
-t_data	*t_data_init(void)
+void	t_data_init(t_data *new)
 {
-	t_data	*new;
-
-	new = malloc(sizeof(t_data));
-	if (!new)
-		return (NULL);
 	new->mlx = NULL;
 	new->mlx_win = NULL;
-	new->map = t_map_init();
-	if (!new->map)
-		return (free_data(new), NULL);
-	if (img_mem_init(new) == 1)
-		return (free_data(new), NULL);
-	if (!new->screen)
-		return (free_data(new), NULL);
-	return (new);
-}
-
-static t_map	*t_map_init(void)
-{
-	t_map	*new;
-
-	new = malloc(sizeof(t_map));
-	if (!new)
-		return (NULL);
-	new->map = NULL;
-	new->texture_no = NULL;
-	new->texture_so = NULL;
-	new->texture_we = NULL;
-	new->texture_ea = NULL;
-	return (new);
-}
-
-static int	img_mem_init(t_data *new)
-{
-	new->screen = malloc(sizeof(t_img));
-	new->ray = malloc(sizeof(t_ray));
-	if (!new->screen || !new->ray)
-		return (1);
-	new->mmap = malloc(sizeof(t_minimap));
-	new->mmap->mm = malloc(sizeof(t_img));
-	new->mmap->mp = malloc(sizeof(t_img));
-	new->mmap->mw = malloc(sizeof(t_img));
-	if (!new->mmap || !new->mmap->mm || !new->mmap->mp || !new->mmap->mw)
-		return (1);
-	return (0);
+	new->map.map = NULL;
+	new->map.texture_no = NULL;
+	new->map.texture_so = NULL;
+	new->map.texture_we = NULL;
+	new->map.texture_ea = NULL;
+	new->screen.img = NULL;
+	new->texture[0].img = NULL;
+	new->texture[1].img = NULL;
+	new->texture[2].img = NULL;
+	new->texture[3].img = NULL;
+	new->mmap.mm.img = NULL;
+	new->mmap.mp.img = NULL;
+	new->mmap.mw.img = NULL;
 }

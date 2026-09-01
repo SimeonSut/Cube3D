@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:07:47 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:08:50 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ static void	movements(t_data *data, int key)
 	new_pos_x = 0.0;
 	new_pos_y = 0.0;
 	new_pos_cal(&new_pos_x, &new_pos_y, data, key);
-	if (data->map->map[(int)new_pos_y][(int)new_pos_x] == '1'
-			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == '\n'
-			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == ' '
-			|| data->map->map[(int)new_pos_y][(int)new_pos_x] == 0)
+	if (data->map.map[(int)new_pos_y][(int)new_pos_x] == '1'
+			|| data->map.map[(int)new_pos_y][(int)new_pos_x] == '\n'
+			|| data->map.map[(int)new_pos_y][(int)new_pos_x] == ' '
+			|| data->map.map[(int)new_pos_y][(int)new_pos_x] == 0)
 		return ;
 	data->p.pos_x = new_pos_x;
 	data->p.pos_y = new_pos_y;

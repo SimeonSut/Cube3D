@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 18:29:03 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:25:12 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 
 void	delta_dist_calculation(t_data *data)
 {
-	if (data->ray->rdx == 0)
-		data->ray->ddx = 1e30;
+	if (data->ray.rdx == 0)
+		data->ray.ddx = 1e30;
 	else
-		data->ray->ddx = fabs(1 / data->ray->rdx);
-	if (data->ray->rdy == 0)
-		data->ray->ddy = 1e30;
+		data->ray.ddx = fabs(1 / data->ray.rdx);
+	if (data->ray.rdy == 0)
+		data->ray.ddy = 1e30;
 	else
-		data->ray->ddy = fabs(1 / data->ray->rdy);
+		data->ray.ddy = fabs(1 / data->ray.rdy);
 }
 
 void	new_pos_cal(double *new_x, double *new_y, t_data *data, int key)

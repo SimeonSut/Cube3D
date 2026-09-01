@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by <your_login>.*
+*This project has been created as part of the 42 curriculum by <ssutarmi> & <csamakka>.*
 
 # cub3D
 
@@ -137,4 +137,4 @@ error message, and exit cleanly without leaking memory.
 
 **AI usage:**
 - Create this README.md.
-- Explaination of texture mapping.
+- Explanation of texture mapping.
