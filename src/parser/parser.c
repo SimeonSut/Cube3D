@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 19:03:34 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static char	**map_info_parser(char *map_path);
 static char	**parser_construct(int fd);
 static int	map_data_init(t_data *data, char **map_info);
+static int	check_validity(t_data *data);
 
 int	parsing(t_data *data, char **av)
 {
@@ -33,12 +34,15 @@ int	parsing(t_data *data, char **av)
 		ft_putstr_fd("Player init error\n", 2);
 		return (free_data(data), 1);
 	}
-	if (flood_fill(map_info, data->p->pos_x, data->p->pos_y) == 1)
+	if (flood_fill(data->map->map, data->p.pos_x, data->p.pos_y) == 1)
 	{
 		ft_putstr_fd("Map invalid: Player is not surround by wall !\n", 2);
 		return (free_data(data), free_all(map_info), 1);
 	}
-	return (free_all(map_info), 0);
+	free_all(map_info);
+	if (check_validity(data) == 1)
+		return (free_data(data), 1);
+	return (0);
 }
 
 static char	**map_info_parser(char *map_path)
@@ -112,3 +116,57 @@ static int	map_data_init(t_data *data, char **map_info)
 	}
 	return (0);
 }
+
+static int	check_validity(t_data *data)
+{
+	int	result;
+
+	result = 0;
+	if (data->map)
+	{
+		if (!data->map->map)
+			result = 1;
+		if (!data->map->texture_no)
+			result = 1;
+		if (!data->map->texture_so)
+			result = 1;
+		if (!data->map->texture_ea)
+			result = 1;
+		if (!data->map->texture_we)
+			result = 1;
+		if (!data->map->color_f)
+			result = 1;
+		if (!data->map->color_c)
+			result = 1;
+	}
+	else
+		result = 1;
+	if (result == 1)
+		ft_putstr_fd("wrong map specifications entry\n", STDERR_FILENO);
+	return (result);
+}
+
+/*
+NO sprites/colorstone.xpm
+SO sprites/bluestone.xpm
+WE sprites/wood.xpm
+EA sprites/greystone.xpm
+
+F 160,160,160
+C 51,153,255
+
+ 11111111111111111111111
+1000000000110000000000001
+1011000001110000000000001
+1001000000000000000000001111
+11111111101100000111000000001
+10000000001100000111110111111
+1111010111111101100000010001
+11110011111111011101010010001
+11000000110101011100000010001
+10000000000000001100000000001
+10000000000000001101010010001
+11000001110101011111011110E01
+11110111 1110101 111011000001
+ 111111   11111   1111111111
+*/

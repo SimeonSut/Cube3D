@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 20:07:55 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 16:56:44 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_player	*p;
+	t_player	p;
 	t_map		*map;
 	t_img		*screen;
 	t_ray		*ray;

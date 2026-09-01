@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 12:37:03 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 19:03:26 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:01:14 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ void	free_data(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	if (data->p)
-		free(data->p);
 	if (data->map)
 		free_t_map(data->map);
 	free_img_mem(data);
 	free(data);
-	data = NULL;
 }
 
 static void	free_t_map(t_map *map_data)

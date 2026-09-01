@@ -6,22 +6,25 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 14:30:26 by csamakka          #+#    #+#             */
-/*   Updated: 2026/08/31 19:12:15 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "cub3d.h"
+#include "parser.h"
 #include "render.h"
 
 static int	texture_select(t_ray *ray);
+static int	check_img_validity(t_data *data);
 
 void	texture_mapping_x(t_data *data)
 {
 	data->tex_index = texture_select(data->ray);
 	if (data->ray->side == 0)
-		data->ray->wall_x = data->p->pos_y + data->ray->perp_wall_dist
+		data->ray->wall_x = data->p.pos_y + data->ray->perp_wall_dist
 			* data->ray->rdy;
 	else
-		data->ray->wall_x = data->p->pos_x + data->ray->perp_wall_dist
+		data->ray->wall_x = data->p.pos_x + data->ray->perp_wall_dist
 			* data->ray->rdx;
 	data->ray->wall_x -= floor(data->ray->wall_x);
 	data->texture[data->tex_index].texture_x
@@ -32,24 +35,6 @@ void	texture_mapping_x(t_data *data)
 	data->texture[data->tex_index].texture_pos = (data->ray->draw_start - H
 			/ 2 + data->ray->line_height / 2)
 		* data->texture[data->tex_index].step;
-}
-
-static int	texture_select(t_ray *ray)
-{
-	if (ray->side == 0)
-	{
-		if (ray->rdx < 0)
-			return (2);
-		else
-			return (3);
-	}
-	else
-	{
-		if (ray->rdy < 0)
-			return (0);
-		else
-			return (1);
-	}
 }
 
 void	texture_mapping_y_draw(t_data *data, int x, int y)
@@ -71,11 +56,8 @@ void	texture_mapping_y_draw(t_data *data, int x, int y)
 		+= data->texture[tex_i].step;
 }
 
-void	texture_init(t_data	*data)
+int	texture_init(t_data	*data, t_texture *txt)
 {
-	t_texture	*txt;
-
-	txt = data->texture;
 	txt[0].img = mlx_xpm_file_to_image(data->mlx, data->map->texture_no,
 			&data->texture[0].width, &data->texture[0].height);
 	txt[1].img = mlx_xpm_file_to_image(data->mlx, data->map->texture_so,
@@ -84,6 +66,8 @@ void	texture_init(t_data	*data)
 			&data->texture[2].width, &data->texture[2].height);
 	txt[3].img = mlx_xpm_file_to_image(data->mlx, data->map->texture_ea,
 			&data->texture[3].width, &data->texture[3].height);
+	if (check_img_validity(data) == 1)
+		return (1);
 	txt[0].addr = mlx_get_data_addr(data->texture[0].img,
 			&data->texture[0].bits_per_pixel, &data->texture[0].line_length,
 			&data->texture[0].endian);
@@ -96,4 +80,37 @@ void	texture_init(t_data	*data)
 	txt[3].addr = mlx_get_data_addr(data->texture[3].img,
 			&data->texture[3].bits_per_pixel, &data->texture[3].line_length,
 			&data->texture[3].endian);
+	return (0);
+}
+
+static int	texture_select(t_ray *ray)
+{
+	if (ray->side == 0)
+	{
+		if (ray->rdx < 0)
+			return (2);
+		else
+			return (3);
+	}
+	else
+	{
+		if (ray->rdy < 0)
+			return (0);
+		else
+			return (1);
+	}
+}
+
+static int check_img_validity(t_data *data)
+{
+	if (!data->texture[0].img)
+		return (1);
+	if (!data->texture[1].img)
+		return (1);
+	if (!data->texture[2].img)
+		return (1);
+	if (!data->texture[3].img)
+		return (1);
+	printf("test passed!\n");
+	return (0);
 }

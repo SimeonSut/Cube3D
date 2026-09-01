@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:06 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 19:47:30 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	map_d_render(t_data *data)
 	while (++x < W)
 	{
 		data->ray->camera_x = 2.0 * x / W - 1;
-		data->ray->rdx = data->p->dx + data->p->plx * data->ray->camera_x;
-		data->ray->rdy = data->p->dy + data->p->ply * data->ray->camera_x;
-		data->ray->map_x = (int)data->p->pos_x;
-		data->ray->map_y = (int)data->p->pos_y;
+		data->ray->rdx = data->p.dx + data->p.plx * data->ray->camera_x;
+		data->ray->rdy = data->p.dy + data->p.ply * data->ray->camera_x;
+		data->ray->map_x = (int)data->p.pos_x;
+		data->ray->map_y = (int)data->p.pos_y;
 		delta_dist_calculation(data);
 		side_dist_calculation(data);
 		hit_determination(data);
@@ -51,26 +51,26 @@ static void	side_dist_calculation(t_data *data)
 	if (data->ray->rdx < 0)
 	{
 		data->ray->step_x = -1;
-		data->ray->side_dist_x = (data->p->pos_x
+		data->ray->side_dist_x = (data->p.pos_x
 				- (double)data->ray->map_x) * data->ray->ddx;
 	}
 	else
 	{
 		data->ray->step_x = 1;
 		data->ray->side_dist_x = ((double)data->ray->map_x + 1.0
-				- data->p->pos_x) * data->ray->ddx;
+				- data->p.pos_x) * data->ray->ddx;
 	}
 	if (data->ray->rdy < 0)
 	{
 		data->ray->step_y = -1;
-		data->ray->side_dist_y = (data->p->pos_y
+		data->ray->side_dist_y = (data->p.pos_y
 				- (double)data->ray->map_y) * data->ray->ddy;
 	}
 	else
 	{
 		data->ray->step_y = 1;
 		data->ray->side_dist_y = ((double)data->ray->map_y
-				+ 1.0 - data->p->pos_y) * data->ray->ddy;
+				+ 1.0 - data->p.pos_y) * data->ray->ddy;
 	}
 }
 

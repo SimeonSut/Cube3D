@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 18:29:03 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 19:18:23 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:00:47 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,22 @@ void	new_pos_cal(double *new_x, double *new_y, t_data *data, int key)
 {
 	if (key == 'w')
 	{
-		*new_x = data->p->pos_x + MOV_SPEED * data->p->dx;
-		*new_y = data->p->pos_y + MOV_SPEED * data->p->dy;
+		*new_x = data->p.pos_x + MOV_SPEED * data->p.dx;
+		*new_y = data->p.pos_y + MOV_SPEED * data->p.dy;
 	}
 	else if (key == 's')
 	{
-		*new_x = data->p->pos_x - MOV_SPEED * data->p->dx;
-		*new_y = data->p->pos_y - MOV_SPEED * data->p->dy;
+		*new_x = data->p.pos_x - MOV_SPEED * data->p.dx;
+		*new_y = data->p.pos_y - MOV_SPEED * data->p.dy;
 	}
 	else if (key == 'a')
 	{
-		*new_x = data->p->pos_x + MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'x');
-		*new_y = data->p->pos_y + MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'y');
+		*new_x = data->p.pos_x + MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'x');
+		*new_y = data->p.pos_y + MOV_SPEED * sidewalk(data, M_PI_2, 'a', 'y');
 	}
 	else if (key == 'd')
 	{
-		*new_x = data->p->pos_x - MOV_SPEED * sidewalk(data, M_PI_2, 'd', 'x');
-		*new_y = data->p->pos_y - MOV_SPEED * sidewalk(data, M_PI_2, 'd', 'y');
+		*new_x = data->p.pos_x - MOV_SPEED * sidewalk(data, M_PI_2, 'd', 'x');
+		*new_y = data->p.pos_y - MOV_SPEED * sidewalk(data, M_PI_2, 'd', 'y');
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 15:53:36 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:22:52 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 16:57:47 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	main(int ac, char **av)
 		return (1);
 	if (minilibx_init(data) == 1)
 		return (1);
-	texture_init(data);
+	if (texture_init(data, data->texture) == 1)
+		return (1);
 	minimap_init(data);
 	mlx_hook(data->mlx_win, 2, 1L << 0, (int (*)())(void *)key_config, data);
 	mlx_hook(data->mlx_win, 6, 1L << 6, (int (*)())(void *)mouse_rotate, data);

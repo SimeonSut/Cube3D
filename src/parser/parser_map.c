@@ -6,7 +6,7 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:19 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:25:19 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 16:24:47 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	direction_and_color_init(t_data *data, char *map_info)
 	if (is_valid(map_info, 0) != 0)
 		return (0);
 	tmps = ft_split(map_info, ' ');
-	if (!tmps)
+	if (!tmps || !tmps[0] || !tmps[1] || tmps[2])
 		return (1);
 	if (is_valid(map_info, 1) == 0)
 	{
@@ -74,7 +74,7 @@ static int	floor_ceil_init(t_data *data, char **tmps)
 	char	**rgb;
 
 	rgb = ft_split(tmps[1], ',');
-	if (!rgb)
+	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 		return (1);
 	if (ft_strncmp(tmps[0], "F", 2) == 0 && tmps[1])
 		data->map->color_f = create_rgb(rgb[0], rgb[1], rgb[2]);

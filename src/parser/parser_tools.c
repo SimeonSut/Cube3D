@@ -6,11 +6,14 @@
 /*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/08/31 18:29:18 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/01 16:54:35 by ssutarmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "cub3d.h"
 #include "parser.h"
+#include "render.h"
+
 
 int	string_count(char **strs);
 
@@ -22,15 +25,23 @@ int	flood_fill(char **map, int p_x, int p_y)
 	height = string_count(map);
 	if (p_y < 0 || p_x < 0)
 		return (0);
+	// printf("map py is %s\n", map[p_y]);
 	widgth = ft_strlen(map[p_y]) - 1;
-	if (p_x >= widgth || p_y >= height || map[p_y][p_x] == '1'
-		|| map[p_y][p_x] == 'X')
+	int i = 0;
+	while (map[i])
+		printf("%s", map[i++]);
+	printf("\n\n");
+	printf("x:%d\ny:%d\n", p_x, p_y);
+	// printf("w:%d\nh:%d\n", widgth, height);
+	if (p_x > widgth || p_y > height)
+		return (1);
+	if (map[p_y][p_x] == '1' || map[p_y][p_x] == 'X')
 		return (0);
 	if (!map[p_y + 1] || map[p_y][p_x + 1] == '\n' || p_y - 1 < 0
 		|| p_x - 1 < 0 || map[p_y + 1][p_x] == ' '
 		|| map[p_y][p_x + 1] == ' ' || map[p_y - 1][p_x] == ' '
 		|| map[p_y][p_x - 1] == ' ')
-		return (1);
+			return (1);
 	map[p_y][p_x] = 'X';
 	if (flood_fill(map, p_x + 1, p_y) == 1)
 		return (1);
@@ -99,6 +110,8 @@ int	string_count(char **strs)
 
 int	minilibx_init(t_data *data)
 {
+	data->screen->img = NULL;
+	data->mlx_win = NULL;
 	data->mlx = mlx_init();
 	if (!data->mlx)
 	{
@@ -106,7 +119,13 @@ int	minilibx_init(t_data *data)
 		free_data(data);
 		return (1);
 	}
-	data->mlx_win = mlx_new_window(data->mlx, W, H, "TMP_TEST");
+	if (texture_init(data, data->texture) == 1)
+	{
+		ft_putstr_fd("texture init failed\n", 2);
+		free_data(data);
+		return (1);
+	}
+	data->mlx_win = mlx_new_window(data->mlx, W, H, "ICE CUBE");
 	if (!data->mlx_win)
 	{
 		ft_putstr_fd("new window fail\n", 2);
