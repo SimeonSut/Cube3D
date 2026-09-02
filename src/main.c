@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 15:53:36 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 18:36:51 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/02 17:57:31 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		ft_putstr_fd("Expected a file .cub\n", 2);
+		ft_putstr_fd(ERR_ARG, 2);
 		return (0);
 	}
 	t_data_init(&data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:24 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 18:38:19 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/02 18:48:57 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,13 @@ int	string_count(char **strs);
 
 int	flood_fill(char **map, int p_x, int p_y)
 {
-	if (p_y < 0 || p_x < 0)
-		return (0);
-	if (p_x > (int)(ft_strlen(map[p_y]) - 1) || p_y > string_count(map))
+	if (p_x < 0 || p_y < 0 || p_y >= string_count(map))
+		return (1);
+	if (p_x >= (int)ft_strlen(map[p_y])
+		|| map[p_y][p_x] == ' ' || map[p_y][p_x] == '\n')
 		return (1);
 	if (map[p_y][p_x] == '1' || map[p_y][p_x] == 'X')
 		return (0);
-	if (!map[p_y + 1] || map[p_y][p_x + 1] == '\n' || p_y - 1 < 0
-		|| p_x - 1 < 0 || map[p_y + 1][p_x] == ' '
-		|| map[p_y][p_x + 1] == ' ' || map[p_y - 1][p_x] == ' '
-		|| map[p_y][p_x - 1] == ' ')
-		return (1);
 	map[p_y][p_x] = 'X';
 	if (flood_fill(map, p_x + 1, p_y) == 1)
 		return (1);
@@ -102,18 +98,18 @@ int	minilibx_init(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 	{
-		ft_putstr_fd("mlx init failed\n", 2);
+		ft_putstr_fd(ERR_MLX, 2);
 		return (free_data(data), 1);
 	}
 	if (texture_init(data, data->texture) == 1)
 	{
-		ft_putstr_fd("texture init failed\n", 2);
+		ft_putstr_fd(ERR_TXT, 2);
 		return (free_data(data), 1);
 	}
 	data->mlx_win = mlx_new_window(data->mlx, W, H, "ICE CUBE");
 	if (!data->mlx_win)
 	{
-		ft_putstr_fd("new window fail\n", 2);
+		ft_putstr_fd(ERR_WIN, 2);
 		return (free_data(data), 1);
 	}
 	data->screen.img = mlx_new_image(data->mlx, W, H);

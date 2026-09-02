@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/18 20:32:17 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 17:09:45 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/02 18:09:30 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ int	parsing(t_data *data, char **av)
 		return (1);
 	if (map_data_init(data, map_info) != 0)
 	{
-		ft_putstr_fd("Map parsing failed !\n", 2);
+		ft_putstr_fd(ERR_MAP, 2);
 		return (free_data(data), free_all(map_info), 1);
 	}
 	if (player_data_init(data) == 1)
 	{
-		ft_putstr_fd("Player init error\n", 2);
+		ft_putstr_fd(ERR_PYR, 2);
 		return (free_data(data), 1);
 	}
 	if (flood_fill(data->map.map, data->p.pos_x, data->p.pos_y) == 1)
 	{
-		ft_putstr_fd("Map invalid: Player is not surround by wall !\n", 2);
+		ft_putstr_fd(ERR_WAL, 2);
 		return (free_data(data), free_all(map_info), 1);
 	}
 	free_all(map_info);
@@ -56,7 +56,7 @@ static char	**map_info_parser(char *map_path)
 		path_len++;
 	if (ft_strncmp(map_path + path_len, ".cub", 5) != 0)
 	{
-		ft_putstr_fd("Path invalid\n", 2);
+		ft_putstr_fd(ERR_PAT, 2);
 		return (NULL);
 	}
 	fd = open(map_path, O_RDONLY);
@@ -137,7 +137,7 @@ static int	check_validity(t_data *data)
 	if (!data->map.color_c)
 		result = 1;
 	if (result == 1)
-		ft_putstr_fd("wrong map specifications entry\n", STDERR_FILENO);
+		ft_putstr_fd(ERR_WMS, STDERR_FILENO);
 	return (result);
 }
 

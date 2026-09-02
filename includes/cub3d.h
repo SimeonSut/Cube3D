@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssutarmi <ssutarmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csamakka <csamakka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/25 21:13:13 by ssutarmi          #+#    #+#             */
-/*   Updated: 2026/09/01 18:39:55 by ssutarmi         ###   ########.fr       */
+/*   Updated: 2026/09/02 18:09:18 by csamakka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 # include <stdio.h>
 # include <math.h>
 # include <mlx.h>
+
+# define ERR_ARG "ERROR: Expected a path_to_map.cub\n"
+# define ERR_MLX "ERROR: Mlx init failed\n"
+# define ERR_TXT "ERROR: Texture init failed\n"
+# define ERR_WIN "ERROR: Window init failed\n"
+# define ERR_MAP "ERROR: Map parsing failed\n"
+# define ERR_PYR "ERROR: Player init failed\n"
+# define ERR_WAL "ERROR: Map invalid\n"
+# define ERR_PAT "ERROR: Path invalid\n"
+# define ERR_WMS "ERROR: Wrong map specifications entry\n"
 
 # define FOV M_PI_4
 # define W 1920
